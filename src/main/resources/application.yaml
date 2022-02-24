@@ -1,6 +1,14 @@
 spring:
+  kafka:
+    consumer:
+      group-id: consumer-utdanning-vurdering
   security:
     oauth2:
       resourceserver:
         jwt:
           issuer-uri: https://idp.felleskomponent.no/nidp/oauth/nam
+
+fint:
+  kafka:
+    application-id: consumer-utdanning-vurdering
+    enable-ssl: true
