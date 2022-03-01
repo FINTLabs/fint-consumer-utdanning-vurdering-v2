@@ -39,10 +39,11 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
     implementation 'io.netty:netty-resolver-dns-native-macos:4.1.72.Final:osx-aarch_64'
 
-    implementation("no.fintlabs:fint-kafka:0-SNAPSHOT")
-
+    implementation 'no.fintlabs:fint-kafka:0-SNAPSHOT'
     implementation "no.fint:fint-utdanning-resource-model-java:${apiVersion}"
-    implementation 'no.fint:fint-cache:2.6.1'
+    implementation 'no.fintlabs:fint-core-cache:0.0.1-SNAPSHOT'
+    implementation 'no.fint:fint-event-model:3.0.1'
+    implementation 'no.fint:fint-relations:2.2.1'
 
     compileOnly 'org.projectlombok:lombok'
     runtimeOnly 'io.micrometer:micrometer-registry-prometheus'
