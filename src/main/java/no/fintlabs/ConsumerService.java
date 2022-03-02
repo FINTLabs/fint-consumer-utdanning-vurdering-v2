@@ -1,17 +1,16 @@
 package no.fintlabs;
 
-import no.fint.model.resource.utdanning.vurdering.FravarResource;
 import no.fintlabs.cache.Cache;
 
 import java.io.Serializable;
 import java.util.stream.Stream;
 
 // TODO: 01/03/2022 Move to fint-core-cache
-public class CacheRepository<T extends Serializable> {
+public class ConsumerService<T extends Serializable> {
 
     private Cache<T> cache;
 
-    public CacheRepository(Cache<T> cache) {
+    public ConsumerService(Cache<T> cache) {
         this.cache = cache;
     }
 

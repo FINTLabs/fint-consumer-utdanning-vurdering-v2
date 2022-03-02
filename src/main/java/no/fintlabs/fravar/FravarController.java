@@ -47,7 +47,7 @@ import java.util.stream.Stream;
 @RequestMapping(name = "Fravar")
 public class FravarController {
 
-    private FravarCacheRepository cacheRepository;
+    private FravarService cacheRepository;
 
     //    @Autowired
 //    private FintAuditService fintAuditService;
@@ -71,7 +71,7 @@ public class FravarController {
 //    private SynchronousEvents synchronousEvents;
 //
 
-    public FravarController(FravarCacheRepository cacheRepository, FravarLinker linker) {
+    public FravarController(FravarService cacheRepository, FravarLinker linker) {
         this.cacheRepository = cacheRepository;
         this.linker = linker;
     }
