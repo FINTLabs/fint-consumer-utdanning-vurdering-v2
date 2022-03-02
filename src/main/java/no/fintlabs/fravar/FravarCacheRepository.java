@@ -2,6 +2,7 @@ package no.fintlabs.fravar;
 
 import io.micrometer.core.instrument.util.StringUtils;
 import lombok.extern.slf4j.Slf4j;
+import no.fint.model.felles.kompleksedatatyper.Identifikator;
 import no.fint.model.resource.utdanning.vurdering.FravarResource;
 import no.fint.model.utdanning.vurdering.Vurdering;
 import no.fintlabs.CacheRepository;
@@ -50,17 +51,14 @@ public class FravarCacheRepository extends CacheRepository<FravarResource> {
                 .orElseThrow();
     }
 
-//    public Optional<FravarResource> getFravarBySystemId(String orgId, String systemId) {
-//        // TODO: 01/03/2022 hashcode er vel ikke nødvendigvis bygget på systemID?
-//        // TODO: 01/03/2022 null-safe?
-//        return streamByHashCode(systemId.hashCode())
-//                .filter(fravarResource -> fravarResource.getSystemId().getIdentifikatorverdi().equals(systemId))
-//                .sorted((f1, f2) -> Long.compare(f2) Comparator.comparingLong(CacheObject::getLastUpdated))
-//                .
-//    }
-//
-//    public Optional<FravarResource> getOne(int hashCode, Predicate<T> idFunction) {
-//
-//        return cache.filter(hashCode, idFunction).max(Comparator.comparingLong(CacheObject::getLastUpdated)).map(CacheObject::getObject);
-//    }
+    public Optional<FravarResource> getFravarBySystemId(String systemId) {
+        return getCache().getLastUpdatedByFilter(systemId.hashCode(),
+                (resource) -> Optional
+                .ofNullable(resource)
+                .map(FravarResource::getSystemId)
+                .map(Identifikator::getIdentifikatorverdi)
+                .map(systemId::equals)
+                .orElse(false)
+        );
+    }
 }

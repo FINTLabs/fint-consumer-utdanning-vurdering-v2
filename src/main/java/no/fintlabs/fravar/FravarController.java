@@ -31,10 +31,12 @@ import lombok.extern.slf4j.Slf4j;
 import no.fint.event.model.HeaderConstants;
 import no.fint.model.resource.utdanning.vurdering.FravarResource;
 import no.fint.model.resource.utdanning.vurdering.FravarResources;
+import no.fintlabs.EntityNotFoundException;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Stream;
 
 @Slf4j
@@ -163,11 +165,11 @@ public class FravarController {
 //            fintAuditService.audit(event);
 //            fintAuditService.audit(event, Status.CACHE);
 //
-//            Optional<FravarResource> fravar = cacheService.getFravarBySystemId(orgId, id);
+            Optional<FravarResource> fravar = cacheRepository.getFravarBySystemId(id);
 //
 //            fintAuditService.audit(event, Status.CACHE_RESPONSE, Status.SENT_TO_CLIENT);
 //
-//            return fravar.map(linker::toResource).orElseThrow(() -> new EntityNotFoundException(id));
+            return fravar.map(linker::toResource).orElseThrow(() -> new EntityNotFoundException(id));
 //
 //        } else {
 //            BlockingQueue<Event> queue = synchronousEvents.register(event);
@@ -184,7 +186,7 @@ public class FravarController {
 //
 //            return linker.toResource(fravar);
 //        }
-        return null;
+//        return null;
     }
 
 
