@@ -43,7 +43,9 @@ dependencies {
     implementation "no.fint:fint-utdanning-resource-model-java:${apiVersion}"
     implementation 'no.fintlabs:fint-core-cache:0-SNAPSHOT'
     implementation 'no.fint:fint-event-model:3.0.1'
-    implementation 'no.fint:fint-relations:2.2.1'
+    implementation('no.fint:fint-relations:2.2.1') {
+        exclude group: 'com.github.springfox.loader'
+    }
 
     compileOnly 'org.projectlombok:lombok'
     runtimeOnly 'io.micrometer:micrometer-registry-prometheus'
