@@ -39,7 +39,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
     implementation 'io.netty:netty-resolver-dns-native-macos:4.1.72.Final:osx-aarch_64'
 
-    implementation 'no.fintlabs:fint-kafka:0-SNAPSHOT'
+    implementation 'no.fintlabs:fint-kafka:1.1.0'
     implementation "no.fint:fint-utdanning-resource-model-java:${apiVersion}"
     implementation 'no.fintlabs:fint-core-cache:0-SNAPSHOT'
     implementation 'no.fint:fint-event-model:3.0.1'

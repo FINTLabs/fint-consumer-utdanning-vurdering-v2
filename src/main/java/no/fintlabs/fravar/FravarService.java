@@ -7,6 +7,7 @@ import no.fint.model.resource.utdanning.vurdering.FravarResource;
 import no.fint.model.utdanning.vurdering.Vurdering;
 import no.fintlabs.ConsumerService;
 import no.fintlabs.cache.Cache;
+import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -31,22 +32,10 @@ public class FravarService extends ConsumerService<FravarResource> {
         fravarKafkaConsumer.registerListener(this::addResourceToCache);
     }
 
-    private void addResourceToCache(FravarResource fravarResource) {
-        String key = getKey(fravarResource);
+    private void addResourceToCache(ConsumerRecord<String, FravarResource> consumerRecord) {
+        FravarResource fravarResource = consumerRecord.value();
         linker.mapLinks(fravarResource);
-        this.getCache().put(key, fravarResource, linker.hashCodes(fravarResource));
-    }
-
-    private String getKey(FravarResource resource) {
-        // TODO: 02/03/2022 Is it possible to get key from kafka. It would have been prefered way 
-        return resource.getSelfLinks()
-                .stream()
-                .filter(s -> !StringUtils.isNotBlank(s.getHref()))
-                .map(s -> s.getHref())
-                .map(k -> k.replaceFirst("^https:/\\/.+\\.felleskomponent.no", ""))
-                .sorted()
-                .findFirst()
-                .orElseThrow();
+        this.getCache().put(consumerRecord.key(), fravarResource, linker.hashCodes(fravarResource));
     }
 
     public Optional<FravarResource> getFravarBySystemId(String systemId) {
