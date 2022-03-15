@@ -4,6 +4,8 @@ import no.fint.model.resource.AbstractCollectionResources;
 import no.fint.model.resource.utdanning.vurdering.FravarResource;
 import no.fint.model.resource.utdanning.vurdering.FravarResources;
 import no.fint.relations.FintLinker;
+import no.fint.relations.internal.FintLinkMapper;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
 import java.util.Collection;

@@ -12,3 +12,7 @@ fint:
   kafka:
     application-id: consumer-utdanning-vurdering
     enable-ssl: true
+logging:
+  level:
+    root: INFO
+    #org.apache.kafka: DEBUG

@@ -1,13 +1,14 @@
 package no.fintlabs.fravar;
 
-import io.micrometer.core.instrument.util.StringUtils;
 import lombok.extern.slf4j.Slf4j;
 import no.fint.model.felles.kompleksedatatyper.Identifikator;
 import no.fint.model.resource.utdanning.vurdering.FravarResource;
 import no.fint.model.utdanning.vurdering.Vurdering;
+import no.fint.relations.internal.FintLinkMapper;
 import no.fintlabs.ConsumerService;
-import no.fintlabs.cache.Cache;
+import no.fintlabs.cache.FintCache;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -21,8 +22,9 @@ public class FravarService extends ConsumerService<FravarResource> {
     private FravarKafkaConsumer fravarKafkaConsumer;
     private FravarLinker linker;
 
-    public FravarService(Cache<FravarResource> cache, FravarKafkaConsumer fravarKafkaConsumer, FravarLinker linker) {
-        super(cache);
+    public FravarService(FravarKafkaConsumer fravarKafkaConsumer, FravarLinker linker) {
+        super(new FintCache<>());
+
         this.fravarKafkaConsumer = fravarKafkaConsumer;
         this.linker = linker;
     }
@@ -48,4 +50,6 @@ public class FravarService extends ConsumerService<FravarResource> {
                         .orElse(false)
         );
     }
+
+
 }
