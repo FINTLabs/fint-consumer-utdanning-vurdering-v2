@@ -1,11 +1,9 @@
 package no.fintlabs.fravar;
 
-import no.fint.model.resource.AbstractCollectionResources;
 import no.fint.model.resource.utdanning.vurdering.FravarResource;
 import no.fint.model.resource.utdanning.vurdering.FravarResources;
 import no.fint.relations.FintLinker;
-import no.fint.relations.internal.FintLinkMapper;
-import org.springframework.context.annotation.Bean;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 
 import java.util.Collection;
@@ -13,7 +11,6 @@ import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import static java.util.Objects.isNull;
-import static org.springframework.util.StringUtils.isEmpty;
 
 @Component
 public class FravarLinker extends FintLinker<FravarResource> {
@@ -48,7 +45,7 @@ public class FravarLinker extends FintLinker<FravarResource> {
     @Override
     public Stream<String> getAllSelfHrefs(FravarResource fravar) {
         Stream.Builder<String> builder = Stream.builder();
-        if (!isNull(fravar.getSystemId()) && !isEmpty(fravar.getSystemId().getIdentifikatorverdi())) {
+        if (!isNull(fravar.getSystemId()) && !StringUtils.isEmpty(fravar.getSystemId().getIdentifikatorverdi())) {
             builder.add(createHrefWithId(fravar.getSystemId().getIdentifikatorverdi(), "systemid"));
         }
 
@@ -57,7 +54,7 @@ public class FravarLinker extends FintLinker<FravarResource> {
 
     int[] hashCodes(FravarResource fravar) {
         IntStream.Builder builder = IntStream.builder();
-        if (!isNull(fravar.getSystemId()) && !isEmpty(fravar.getSystemId().getIdentifikatorverdi())) {
+        if (!isNull(fravar.getSystemId()) && !StringUtils.isEmpty(fravar.getSystemId().getIdentifikatorverdi())) {
             builder.add(fravar.getSystemId().getIdentifikatorverdi().hashCode());
         }
 

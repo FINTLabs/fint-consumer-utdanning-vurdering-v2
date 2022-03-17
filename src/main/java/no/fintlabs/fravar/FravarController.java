@@ -47,13 +47,13 @@ import java.util.stream.Stream;
 @RequestMapping(name = "Fravar")
 public class FravarController {
 
-    private FravarService cacheRepository;
+    private final FravarService fravarService;
 
     //    @Autowired
 //    private FintAuditService fintAuditService;
 //
 //    @Autowired
-      private FravarLinker linker;
+      private final FravarLinker linker;
 //
 //    @Autowired
 //    private ConsumerProps props;
@@ -72,7 +72,7 @@ public class FravarController {
 //
 
     public FravarController(FravarService cacheRepository, FravarLinker linker) {
-        this.cacheRepository = cacheRepository;
+        this.fravarService = cacheRepository;
         this.linker = linker;
     }
 
@@ -84,7 +84,7 @@ public class FravarController {
 //        if (props.isOverrideOrgId() || orgId == null) {
 //            orgId = props.getDefaultOrgId();
 //        }
-        String lastUpdated = Long.toString(cacheRepository.getLastUpdated());
+        String lastUpdated = Long.toString(fravarService.getLastUpdated());
         return Map.of("lastUpdated", lastUpdated);
     }
 
@@ -96,7 +96,7 @@ public class FravarController {
 //        if (props.isOverrideOrgId() || orgId == null) {
 //            orgId = props.getDefaultOrgId();
 //        }
-        return Map.of("size", cacheRepository.getCacheSize());
+        return Map.of("size", fravarService.getCacheSize());
     }
 
     @GetMapping
@@ -129,18 +129,18 @@ public class FravarController {
 
         Stream<FravarResource> resources;
         if (size > 0 && offset >= 0 && sinceTimeStamp > 0) {
-            resources = cacheRepository.streamSliceSince(sinceTimeStamp, offset, size);
+            resources = fravarService.streamSliceSince(sinceTimeStamp, offset, size);
         } else if (size > 0 && offset >= 0) {
-            resources = cacheRepository.streamSlice(offset, size);
+            resources = fravarService.streamSlice(offset, size);
         } else if (sinceTimeStamp > 0) {
-            resources = cacheRepository.streamSince(sinceTimeStamp);
+            resources = fravarService.streamSince(sinceTimeStamp);
         } else {
-            resources = cacheRepository.streamAll();
+            resources = fravarService.streamAll();
         }
 
         //fintAuditService.audit(event, Status.CACHE_RESPONSE, Status.SENT_TO_CLIENT);
 
-        return linker.toResources(resources, offset, size, cacheRepository.getCacheSize());
+        return linker.toResources(resources, offset, size, fravarService.getCacheSize());
     }
 
 
@@ -148,7 +148,7 @@ public class FravarController {
     public FravarResource getFravarBySystemId(
             @PathVariable String id,
             @RequestHeader(name = HeaderConstants.ORG_ID, required = false) String orgId,
-            @RequestHeader(name = HeaderConstants.CLIENT, required = false) String client) throws InterruptedException {
+            @RequestHeader(name = HeaderConstants.CLIENT, required = false) String client) {
 //        if (props.isOverrideOrgId() || orgId == null) {
 //            orgId = props.getDefaultOrgId();
 //        }
@@ -165,7 +165,7 @@ public class FravarController {
 //            fintAuditService.audit(event);
 //            fintAuditService.audit(event, Status.CACHE);
 //
-            Optional<FravarResource> fravar = cacheRepository.getFravarBySystemId(id);
+            Optional<FravarResource> fravar = fravarService.getFravarBySystemId(id);
 //
 //            fintAuditService.audit(event, Status.CACHE_RESPONSE, Status.SENT_TO_CLIENT);
 //
