@@ -32,9 +32,9 @@ import no.fint.event.model.HeaderConstants;
 import no.fint.model.resource.utdanning.vurdering.FravarResource;
 import no.fint.model.resource.utdanning.vurdering.FravarResources;
 import no.fintlabs.EntityNotFoundException;
+import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Stream;
@@ -44,7 +44,7 @@ import java.util.stream.Stream;
 //@CrossOrigin
 @RestController
 //@RequestMapping(name = "Fravar", value = RestEndpoints.FRAVAR, produces = {FintRelationsMediaType.APPLICATION_HAL_JSON_VALUE, MediaType.APPLICATION_JSON_UTF8_VALUE})
-@RequestMapping(name = "Fravar")
+@RequestMapping("Fravar")
 public class FravarController {
 
     private final FravarService fravarService;
@@ -53,7 +53,7 @@ public class FravarController {
 //    private FintAuditService fintAuditService;
 //
 //    @Autowired
-      private final FravarLinker linker;
+    private final FravarLinker linker;
 //
 //    @Autowired
 //    private ConsumerProps props;
@@ -105,8 +105,7 @@ public class FravarController {
             @RequestHeader(name = HeaderConstants.CLIENT, required = false) String client,
             @RequestParam(defaultValue = "0") long sinceTimeStamp,
             @RequestParam(defaultValue = "0") int size,
-            @RequestParam(defaultValue = "0") int offset,
-            HttpServletRequest request) {
+            @RequestParam(defaultValue = "0") int offset) {
 //        if (cacheService == null) {
 //            throw new CacheDisabledException("Fravar cache is disabled.");
 //        }
@@ -165,11 +164,11 @@ public class FravarController {
 //            fintAuditService.audit(event);
 //            fintAuditService.audit(event, Status.CACHE);
 //
-            Optional<FravarResource> fravar = fravarService.getFravarBySystemId(id);
+        Optional<FravarResource> fravar = fravarService.getFravarBySystemId(id);
 //
 //            fintAuditService.audit(event, Status.CACHE_RESPONSE, Status.SENT_TO_CLIENT);
 //
-            return fravar.map(linker::toResource).orElseThrow(() -> new EntityNotFoundException(id));
+        return fravar.map(linker::toResource).orElseThrow(() -> new EntityNotFoundException(id));
 //
 //        } else {
 //            BlockingQueue<Event> queue = synchronousEvents.register(event);

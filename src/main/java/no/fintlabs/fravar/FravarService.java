@@ -37,7 +37,7 @@ public class FravarService extends ConsumerService<FravarResource> {
         linker.mapLinks(fravarResource);
         this.getCache().put(consumerRecord.key(), fravarResource, linker.hashCodes(fravarResource));
 
-        log.info("The cache now containes " + this.getCacheSize() + " elements.");
+        //log.info("The cache now containes " + this.getCacheSize() + " elements.");
     }
 
     public Optional<FravarResource> getFravarBySystemId(String systemId) {
