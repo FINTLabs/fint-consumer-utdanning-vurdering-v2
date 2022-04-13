@@ -1,18 +1,23 @@
 package no.fintlabs;
 
 import no.fintlabs.cache.Cache;
+import no.fintlabs.cache.CacheManager;
 
 import java.io.Serializable;
 import java.util.stream.Stream;
 
 // TODO: 01/03/2022 Move to fint-core-cache
-public class ConsumerService<T extends Serializable> {
+public abstract class ConsumerService<T extends Serializable> {
 
     private Cache<T> cache;
+    private CacheManager cacheManager;
 
-    public ConsumerService(Cache<T> cache) {
-        this.cache = cache;
+    public ConsumerService(CacheManager cacheManager) {
+        this.cacheManager = cacheManager;
+        cache = initializeCache(cacheManager);
     }
+
+    protected abstract Cache<T> initializeCache(CacheManager cacheManager);
 
     protected Cache<T> getCache() {
         return cache;

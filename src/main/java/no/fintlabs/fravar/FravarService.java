@@ -4,7 +4,10 @@ import lombok.extern.slf4j.Slf4j;
 import no.fint.model.felles.kompleksedatatyper.Identifikator;
 import no.fint.model.resource.utdanning.vurdering.FravarResource;
 import no.fintlabs.ConsumerService;
+import no.fintlabs.cache.Cache;
+import no.fintlabs.cache.CacheManager;
 import no.fintlabs.cache.FintCache;
+import no.fintlabs.cache.packing.PackingTypes;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.stereotype.Service;
 
@@ -19,11 +22,15 @@ public class FravarService extends ConsumerService<FravarResource> {
 
     private final FravarLinker linker;
 
-    public FravarService(FravarKafkaConsumer fravarKafkaConsumer, FravarLinker linker, FintCache<FravarResource> cache) {
-        super(cache);
-
+    public FravarService(FravarKafkaConsumer fravarKafkaConsumer, FravarLinker linker, CacheManager cacheManager) {
+        super(cacheManager);
         this.fravarKafkaConsumer = fravarKafkaConsumer;
         this.linker = linker;
+    }
+
+    @Override
+    protected Cache<FravarResource> initializeCache(CacheManager cacheManager) {
+        return cacheManager.<FravarResource>create(PackingTypes.DEFLATE);
     }
 
     @PostConstruct

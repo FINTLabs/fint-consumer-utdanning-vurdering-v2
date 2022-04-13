@@ -41,7 +41,7 @@ dependencies {
 
     implementation 'no.fintlabs:fint-kafka:1.2.0'
     implementation "no.fint:fint-utdanning-resource-model-java:${apiVersion}"
-    implementation 'no.fintlabs:fint-core-cache:0.0.7'
+    implementation 'no.fintlabs:fint-core-cache:0.0.9'
     implementation 'no.fint:fint-event-model:3.0.1'
     implementation('no.fint:fint-relations:2.2.1') {
         exclude group: 'com.github.springfox.loader'
