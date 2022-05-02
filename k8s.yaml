@@ -35,7 +35,7 @@ spec:
     spec:
       restartPolicy: Always
       containers:
-        - image: fintlabsacr.azurecr.io/fint-core-consumer-utdanning-vurdering:build.${BUILD_NUMBER}_${GIT_COMMIT}
+        - image: fintlabsacr.azurecr.io/fint-core-consumer-utdanning-vurdering:dummy
           name: fint-core-consumer-utdanning-vurdering
           resources:
             limits:
