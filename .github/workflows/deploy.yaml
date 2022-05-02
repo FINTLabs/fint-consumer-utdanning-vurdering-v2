@@ -11,7 +11,7 @@ env:
   API_CLUSTER_NAME: aks-api-fint-2022-02-08
   API_CLUSTER_RESOURCE_GROUP: rg-aks-api
   NAMESPACE: default
-  APP_NAME: fint-consumer-utdanning-vurdering-v2
+  APP_NAME: fint-core-consumer-utdanning-vurdering
 
 jobs:
   build:
