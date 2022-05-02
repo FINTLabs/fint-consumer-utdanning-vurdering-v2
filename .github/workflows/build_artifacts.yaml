@@ -38,20 +38,20 @@ jobs:
 
 ## Uncomment to trigger deploy to alpha when pull request
 ## Use for development. For prod use "Start publish workflow"
-      - name: Start publish and deploy to ALPHA workflow
-        if: startsWith(github.event.head_commit.message, 'Merge pull request')
-        uses: peter-evans/repository-dispatch@v1
-        with:
-          token: ${{ secrets.GITHUBACTION_TOKEN }}
-          repository: ${{ github.repository }}
-          event-type: trigger-to-publish-deploy-alpha
-
-## Uncomment to trigger a build and publish image to ACR
-#      - name: Start publish workflow
-#        if: github.ref == 'refs/heads/main'
+#      - name: Start publish and deploy to ALPHA workflow
+#        if: startsWith(github.event.head_commit.message, 'Merge pull request')
 #        uses: peter-evans/repository-dispatch@v1
 #        with:
 #          token: ${{ secrets.GITHUBACTION_TOKEN }}
 #          repository: ${{ github.repository }}
-#          event-type: trigger-to-publish
+#          event-type: trigger-to-publish-deploy-alpha
+
+## Uncomment to trigger a build and publish image to ACR
+      - name: Start publish workflow
+        if: github.ref == 'refs/heads/main'
+        uses: peter-evans/repository-dispatch@v1
+        with:
+          token: ${{ secrets.GITHUBACTION_TOKEN }}
+          repository: ${{ github.repository }}
+          event-type: trigger-to-publish
 
