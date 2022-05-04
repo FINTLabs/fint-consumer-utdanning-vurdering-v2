@@ -1,4 +1,4 @@
-package no.fintlabs;
+package no.fintlabs.consumer.config;
 
 import no.fint.relations.config.FintRelationsProps;
 import no.fint.relations.internal.FintLinkMapper;

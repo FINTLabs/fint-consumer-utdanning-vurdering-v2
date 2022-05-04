@@ -1,4 +1,4 @@
-package no.fintlabs.fravar;
+package no.fintlabs.consumer.fravar;
 
 import lombok.extern.slf4j.Slf4j;
 import no.fint.model.resource.utdanning.vurdering.FravarResource;

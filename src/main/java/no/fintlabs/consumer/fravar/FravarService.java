@@ -1,12 +1,11 @@
-package no.fintlabs.fravar;
+package no.fintlabs.consumer.fravar;
 
 import lombok.extern.slf4j.Slf4j;
 import no.fint.model.felles.kompleksedatatyper.Identifikator;
 import no.fint.model.resource.utdanning.vurdering.FravarResource;
-import no.fintlabs.ConsumerService;
+import no.fintlabs.consumer.ConsumerService;
 import no.fintlabs.cache.Cache;
 import no.fintlabs.cache.CacheManager;
-import no.fintlabs.cache.FintCache;
 import no.fintlabs.cache.packing.PackingTypes;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.stereotype.Service;

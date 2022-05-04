@@ -1,4 +1,4 @@
-package no.fintlabs.fravar;
+package no.fintlabs.consumer.fravar;
 
 //
 //import com.google.common.collect.ImmutableMap;
@@ -32,7 +32,6 @@ import no.fint.event.model.HeaderConstants;
 import no.fint.model.resource.utdanning.vurdering.FravarResource;
 import no.fint.model.resource.utdanning.vurdering.FravarResources;
 import no.fintlabs.EntityNotFoundException;
-import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;

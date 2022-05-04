@@ -12,6 +12,8 @@ spring:
       group-id: consumer-utdanning-vurdering
 
 fint:
+  consumer:
+    org-id:
   kafka:
     application-id: consumer-utdanning-vurdering
     enable-ssl: true

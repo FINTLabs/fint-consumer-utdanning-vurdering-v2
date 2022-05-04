@@ -1,4 +1,4 @@
-package no.fintlabs;
+package no.fintlabs.consumer;
 
 import no.fintlabs.cache.Cache;
 import no.fintlabs.cache.CacheManager;
