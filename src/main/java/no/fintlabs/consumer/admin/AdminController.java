@@ -6,14 +6,17 @@ import no.fint.event.model.Event;
 import no.fint.event.model.HeaderConstants;
 import no.fint.event.model.health.Health;
 import no.fintlabs.cache.CacheManager;
+import no.fintlabs.consumer.ConsumerService;
 import no.fintlabs.consumer.config.ConsumerProps;
-import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.*;
-import java.util.function.Function;
+import java.util.Collection;
+import java.util.Date;
+import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -21,15 +24,13 @@ import java.util.stream.Collectors;
 @CrossOrigin
 @RequestMapping(value = "admin/", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 public class AdminController {
-//
+    //
 //    @Autowired
 //    private ConsumerEventUtil consumerEventUtil;
 //
-//    @Autowired
-//    private CacheManager<?> cacheManager;
-//
-//    @Autowired(required = false)
-//    private Collection<CacheService<?>> cacheServices;
+
+    @Autowired(required = false)
+    private Collection<ConsumerService<?>> consumerServices;
 
     private ConsumerProps consumerProps;
 
@@ -44,7 +45,7 @@ public class AdminController {
     public ResponseEntity<Event<Health>> healthCheck(@RequestHeader(HeaderConstants.ORG_ID) String orgId,
                                                      @RequestHeader(HeaderConstants.CLIENT) String client) {
 
-        // TODO: 04/05/2022 Implement when status service is working
+        // TODO: 04/05/2022 Implement when status service is working (Should 303 to status serivce)
         throw new UnsupportedOperationException();
 
 //        log.debug("Health check on {} requested by {} ...", orgId, client);
@@ -79,38 +80,36 @@ public class AdminController {
         //return cacheManager.getKeys().stream().filter(key -> CacheUri.containsOrgId(key, orgId)).collect(Collectors.toList());
     }
 
-    @GetMapping("/assets")
+    @GetMapping(value = "/assets", produces = MediaType.APPLICATION_JSON_VALUE)
     public Collection<String> getAssets() {
         return Set.of(consumerProps.getOrgId(), "tullOgBall.no");
     }
 
     @GetMapping("/caches")
     public Map<String, Integer> getCaches() {
-        // TODO: 04/05/2022 Need changes in core-cache
-        throw new UnsupportedOperationException();
-//        return cacheManager
-//                .getKeys()
-//                .stream()
-//                .collect(Collectors
-//                        .toMap(Function.identity(),
-//                                k -> cacheManager.getCache(k).map(Cache::size).orElse(0)));
+        return consumerServices.stream()
+                .collect(Collectors.toMap(
+                        ConsumerService::getName,
+                        ConsumerService::getCacheSize)
+                );
     }
 
     @GetMapping("/cache/status")
-    //public Map<String, Map<String, CacheEntry>> getCacheStatus() {
-    public Map<String, Map<String, String>> getCacheStatus() {
-        // TODO: 04/05/2022 Need changes in core-cache
-        throw new UnsupportedOperationException();
-//        return cacheManager
-//                .getKeys()
-//                .stream()
-//                .map(s -> StringUtils.split(s, ':'))
-//                .collect(
-//                        Collectors.groupingBy(s -> s[2],
-//                                Collectors.toMap(s -> s[3],
-//                                        s -> cacheManager.getCache(String.join(":", s))
-//                                                .map(c -> new CacheEntry(new Date(c.getLastUpdated()), c.size()))
-//                                                .orElse(new CacheEntry(null, null)))));
+    public Map<String, Map<String, CacheEntry>> getCacheStatus() {
+
+        if (consumerProps.getOrgId() == null || consumerProps.getOrgId().equals(""))
+            throw new IllegalArgumentException("Config for OrgId can not be empty.");
+
+        return consumerServices
+                .stream()
+                .collect(
+                        Collectors.groupingBy(s -> consumerProps.getOrgId(),
+                                Collectors.toMap(
+                                        s -> s.getName(),
+                                        s -> new CacheEntry(new Date(s.getLastUpdated()), s.getCacheSize())
+                                )
+                        )
+                );
     }
 
     @PostMapping({"/cache/rebuild", "/cache/rebuild/{model}"})

@@ -11,10 +11,12 @@ public abstract class ConsumerService<T extends Serializable> {
 
     private Cache<T> cache;
     private CacheManager cacheManager;
+    private String className;
 
-    public ConsumerService(CacheManager cacheManager) {
+    public ConsumerService(CacheManager cacheManager, Class modelType) {
         this.cacheManager = cacheManager;
         cache = initializeCache(cacheManager);
+        className = modelType.getSimpleName();
     }
 
     protected abstract Cache<T> initializeCache(CacheManager cacheManager);
@@ -49,5 +51,9 @@ public abstract class ConsumerService<T extends Serializable> {
 
     public Stream<T> streamByHashCode(int hashCode) {
         return cache.streamByHashCode(hashCode);
+    }
+
+    public String getName() {
+        return className.toLowerCase();
     }
 }

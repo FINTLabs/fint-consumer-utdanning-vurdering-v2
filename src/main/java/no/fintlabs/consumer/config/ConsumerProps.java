@@ -1,6 +1,7 @@
 package no.fintlabs.consumer.config;
 
 import lombok.Getter;
+import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
@@ -11,9 +12,11 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Getter
-@Configuration("fint.consumer")
+@Setter
+@Configuration()
 public class ConsumerProps {
 
+    @Value("${fint.consumer.org-id}")
     private String orgId;
 
 //    @Value("${fint.consumer.override-org-id:false}")

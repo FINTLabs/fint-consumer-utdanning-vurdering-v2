@@ -3,6 +3,7 @@ package no.fintlabs.consumer.fravar;
 import lombok.extern.slf4j.Slf4j;
 import no.fint.model.felles.kompleksedatatyper.Identifikator;
 import no.fint.model.resource.utdanning.vurdering.FravarResource;
+import no.fint.model.utdanning.vurdering.Fravar;
 import no.fintlabs.consumer.ConsumerService;
 import no.fintlabs.cache.Cache;
 import no.fintlabs.cache.CacheManager;
@@ -22,7 +23,7 @@ public class FravarService extends ConsumerService<FravarResource> {
     private final FravarLinker linker;
 
     public FravarService(FravarKafkaConsumer fravarKafkaConsumer, FravarLinker linker, CacheManager cacheManager) {
-        super(cacheManager);
+        super(cacheManager, Fravar.class);
         this.fravarKafkaConsumer = fravarKafkaConsumer;
         this.linker = linker;
     }
