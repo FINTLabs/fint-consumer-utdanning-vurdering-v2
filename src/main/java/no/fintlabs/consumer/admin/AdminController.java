@@ -82,7 +82,7 @@ public class AdminController {
 
     @GetMapping(value = "/assets", produces = MediaType.APPLICATION_JSON_VALUE)
     public Collection<String> getAssets() {
-        return Set.of(consumerProps.getOrgId(), "tullOgBall.no");
+        return Set.of(consumerProps.getOrgId());
     }
 
     @GetMapping("/caches")
