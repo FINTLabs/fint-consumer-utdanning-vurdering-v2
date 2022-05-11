@@ -1,9 +1,8 @@
-package no.fintlabs.consumer.fravar;
+package no.fintlabs.fravarsoversikt;
 
 import lombok.extern.slf4j.Slf4j;
-import no.fint.model.resource.utdanning.vurdering.FravarResource;
+import no.fint.model.resource.utdanning.vurdering.FravarsoversiktResource;
 import no.fintlabs.kafka.common.ListenerBeanRegistrationService;
-import no.fintlabs.kafka.common.topic.TopicService;
 import no.fintlabs.kafka.entity.EntityConsumerFactoryService;
 import no.fintlabs.kafka.entity.topic.EntityTopicNameParameters;
 import no.fintlabs.kafka.entity.topic.EntityTopicService;
@@ -19,30 +18,31 @@ import java.util.function.Consumer;
 
 @Slf4j
 @Service
-public class FravarKafkaConsumer {
+public class FravarsoversiktKafkaConsumer {
 
     private final EntityConsumerFactoryService entityConsumerFactoryService;
     private final ListenerBeanRegistrationService listenerBeanRegistrationService;
     private final EntityTopicService entityTopicService;
 
-    public FravarKafkaConsumer(EntityConsumerFactoryService entityConsumerFactoryService, ListenerBeanRegistrationService listenerBeanRegistrationService, EntityTopicService entityTopicService) {
+    public FravarsoversiktKafkaConsumer(EntityConsumerFactoryService entityConsumerFactoryService, ListenerBeanRegistrationService listenerBeanRegistrationService, EntityTopicService entityTopicService) {
         this.entityConsumerFactoryService = entityConsumerFactoryService;
         this.listenerBeanRegistrationService = listenerBeanRegistrationService;
         this.entityTopicService = entityTopicService;
     }
 
-    public long registerListener(Consumer<ConsumerRecord<String, FravarResource>> consumer) {
+    public long registerListener(Consumer<ConsumerRecord<String, FravarsoversiktResource>> consumer) {
         EntityTopicNameParameters topicNameParameters = EntityTopicNameParameters
                 .builder()
-                .resource("utdanning-vurdering-fravar")
+                .resource("utdanning-vurdering-fravarsoversikt")
                 .build();
 
         long retention = getRetention(topicNameParameters);
-        // TODO: 11/03/2022 What to do if fails to get retention 
+        // TODO: 11/03/2022 What to do if fails to get retention
+        // TODO: 11/05/2022 What if the adapter re-register and the retention change
 
-        ConcurrentMessageListenerContainer<String, FravarResource> messageListenerContainer =
+        ConcurrentMessageListenerContainer<String, FravarsoversiktResource> messageListenerContainer =
                 entityConsumerFactoryService
-                        .createFactory(FravarResource.class, consumer, new CommonLoggingErrorHandler())
+                        .createFactory(FravarsoversiktResource.class, consumer, new CommonLoggingErrorHandler())
                         .createContainer(topicNameParameters);
 
         listenerBeanRegistrationService.registerBean(messageListenerContainer);

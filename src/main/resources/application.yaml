@@ -17,6 +17,10 @@ fint:
   kafka:
     application-id: consumer-utdanning-vurdering
     enable-ssl: true
+    topic:
+      org-id: fintlabs.no
+      domain-context: fint-core
+
 logging:
   level:
     root: INFO
