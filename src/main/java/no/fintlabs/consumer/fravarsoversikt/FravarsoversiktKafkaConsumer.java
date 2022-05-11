@@ -1,4 +1,4 @@
-package no.fintlabs.fravarsoversikt;
+package no.fintlabs.consumer.fravarsoversikt;
 
 import lombok.extern.slf4j.Slf4j;
 import no.fint.model.resource.utdanning.vurdering.FravarsoversiktResource;

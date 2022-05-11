@@ -1,4 +1,4 @@
-package no.fintlabs.fravarsoversikt;
+package no.fintlabs.consumer.fravarsoversikt;
 
 import no.fint.model.resource.utdanning.vurdering.FravarsoversiktResource;
 import no.fint.model.resource.utdanning.vurdering.FravarsoversiktResources;

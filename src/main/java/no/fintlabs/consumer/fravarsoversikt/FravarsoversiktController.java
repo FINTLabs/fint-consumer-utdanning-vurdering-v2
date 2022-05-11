@@ -1,4 +1,4 @@
-package no.fintlabs.fravarsoversikt;
+package no.fintlabs.consumer.fravarsoversikt;
 
 //
 //import com.google.common.collect.ImmutableMap;

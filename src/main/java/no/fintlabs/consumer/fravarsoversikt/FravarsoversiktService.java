@@ -1,12 +1,13 @@
-package no.fintlabs.fravarsoversikt;
+package no.fintlabs.consumer.fravarsoversikt;
 
 import lombok.extern.slf4j.Slf4j;
 import no.fint.model.felles.kompleksedatatyper.Identifikator;
 import no.fint.model.resource.utdanning.vurdering.FravarsoversiktResource;
-import no.fintlabs.ConsumerService;
+import no.fint.model.utdanning.vurdering.Fravarsoversikt;
 import no.fintlabs.cache.Cache;
 import no.fintlabs.cache.CacheManager;
 import no.fintlabs.cache.packing.PackingTypes;
+import no.fintlabs.consumer.ConsumerService;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.stereotype.Service;
 
@@ -22,7 +23,7 @@ public class FravarsoversiktService extends ConsumerService<FravarsoversiktResou
     private final FravarsoversiktLinker linker;
 
     public FravarsoversiktService(FravarsoversiktKafkaConsumer fravarKafkaConsumer, FravarsoversiktLinker linker, CacheManager cacheManager) {
-        super(cacheManager);
+        super(cacheManager, Fravarsoversikt.class);
         this.fravarsoversiktKafkaConsumer = fravarKafkaConsumer;
         this.linker = linker;
     }
