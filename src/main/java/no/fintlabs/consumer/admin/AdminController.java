@@ -1,6 +1,5 @@
 package no.fintlabs.consumer.admin;
 
-
 import lombok.extern.slf4j.Slf4j;
 import no.fint.event.model.Event;
 import no.fint.event.model.HeaderConstants;
@@ -13,10 +12,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Collection;
-import java.util.Date;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -32,9 +28,9 @@ public class AdminController {
     @Autowired(required = false)
     private Collection<ConsumerService<?>> consumerServices;
 
-    private ConsumerProps consumerProps;
+    private final ConsumerProps consumerProps;
 
-    private CacheManager cacheManager;
+    private final CacheManager cacheManager;
 
     public AdminController(ConsumerProps consumerProps, CacheManager cacheManager) {
         this.consumerProps = consumerProps;
@@ -67,17 +63,17 @@ public class AdminController {
 
     @GetMapping("/organisations")
     public Collection<String> getOrganisations() {
-        // TODO: 04/05/2022 Need changes in core-cache
-        //return cacheManager.getKeys();
-        throw new UnsupportedOperationException();
+        return consumerServices
+                .stream()
+                .map(consumerService -> consumerService.getCacheUrn())
+                .collect(Collectors.toList());
     }
 
     @Deprecated()
     @GetMapping("/organisations/{orgId:.+}")
     public Collection<String> getOrganization(@PathVariable String orgId) {
-        // TODO: 04/05/2022 Need changes in core-cache
-        throw new UnsupportedOperationException();
-        //return cacheManager.getKeys().stream().filter(key -> CacheUri.containsOrgId(key, orgId)).collect(Collectors.toList());
+
+        return !orgId.equals(consumerProps.getOrgId()) ? Collections.EMPTY_LIST : getOrganisations();
     }
 
     @GetMapping(value = "/assets", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -89,7 +85,7 @@ public class AdminController {
     public Map<String, Integer> getCaches() {
         return consumerServices.stream()
                 .collect(Collectors.toMap(
-                        ConsumerService::getName,
+                        ConsumerService::getCacheUrn,
                         ConsumerService::getCacheSize)
                 );
     }
@@ -105,7 +101,7 @@ public class AdminController {
                 .collect(
                         Collectors.groupingBy(s -> consumerProps.getOrgId(),
                                 Collectors.toMap(
-                                        s -> s.getName(),
+                                        s -> s.getModelName(),
                                         s -> new CacheEntry(new Date(s.getLastUpdated()), s.getCacheSize())
                                 )
                         )

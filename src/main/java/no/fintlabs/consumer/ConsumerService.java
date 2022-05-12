@@ -2,7 +2,9 @@ package no.fintlabs.consumer;
 
 import no.fintlabs.cache.Cache;
 import no.fintlabs.cache.CacheManager;
+import no.fintlabs.consumer.config.ConsumerProps;
 
+import javax.annotation.PostConstruct;
 import java.io.Serializable;
 import java.util.stream.Stream;
 
@@ -11,15 +13,17 @@ public abstract class ConsumerService<T extends Serializable> {
 
     private Cache<T> cache;
     private CacheManager cacheManager;
-    private String className;
+    private final ConsumerProps consumerProps;
+    private final String modelName;
 
-    public ConsumerService(CacheManager cacheManager, Class modelType) {
+    public ConsumerService(CacheManager cacheManager, Class modelType, ConsumerProps consumerProps) {
         this.cacheManager = cacheManager;
-        cache = initializeCache(cacheManager);
-        className = modelType.getSimpleName();
+        this.consumerProps = consumerProps;
+        this.modelName = modelType.getSimpleName().toLowerCase();
+        cache = initializeCache(cacheManager, consumerProps, modelName);
     }
 
-    protected abstract Cache<T> initializeCache(CacheManager cacheManager);
+    protected abstract Cache<T> initializeCache(CacheManager cacheManager, ConsumerProps consumerProps, String modelName);
 
     protected Cache<T> getCache() {
         return cache;
@@ -53,7 +57,11 @@ public abstract class ConsumerService<T extends Serializable> {
         return cache.streamByHashCode(hashCode);
     }
 
-    public String getName() {
-        return className.toLowerCase();
+    public String getCacheUrn() {
+        return cache.getUrn();
+    }
+
+    public String getModelName() {
+        return modelName;
     }
 }

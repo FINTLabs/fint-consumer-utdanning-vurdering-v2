@@ -8,6 +8,7 @@ import no.fintlabs.consumer.ConsumerService;
 import no.fintlabs.cache.Cache;
 import no.fintlabs.cache.CacheManager;
 import no.fintlabs.cache.packing.PackingTypes;
+import no.fintlabs.consumer.config.ConsumerProps;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.stereotype.Service;
 
@@ -22,15 +23,15 @@ public class FravarService extends ConsumerService<FravarResource> {
 
     private final FravarLinker linker;
 
-    public FravarService(FravarKafkaConsumer fravarKafkaConsumer, FravarLinker linker, CacheManager cacheManager) {
-        super(cacheManager, Fravar.class);
+    public FravarService(FravarKafkaConsumer fravarKafkaConsumer, FravarLinker linker, CacheManager cacheManager, ConsumerProps consumerProps) {
+        super(cacheManager, Fravar.class, consumerProps);
         this.fravarKafkaConsumer = fravarKafkaConsumer;
         this.linker = linker;
     }
 
     @Override
-    protected Cache<FravarResource> initializeCache(CacheManager cacheManager) {
-        return cacheManager.<FravarResource>create(PackingTypes.DEFLATE);
+    protected Cache<FravarResource> initializeCache(CacheManager cacheManager, ConsumerProps consumerProps, String modelName) {
+        return cacheManager.<FravarResource>create(PackingTypes.DEFLATE, consumerProps.getOrgId(), modelName);
     }
 
     @PostConstruct
