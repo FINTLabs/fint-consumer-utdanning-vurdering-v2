@@ -1,7 +1,7 @@
-package no.fintlabs.fravar;
+package no.fintlabs.consumer.fravarsoversikt;
 
-import no.fint.model.resource.utdanning.vurdering.FravarResource;
-import no.fint.model.resource.utdanning.vurdering.FravarResources;
+import no.fint.model.resource.utdanning.vurdering.FravarsoversiktResource;
+import no.fint.model.resource.utdanning.vurdering.FravarsoversiktResources;
 import no.fint.relations.FintLinker;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
@@ -13,37 +13,37 @@ import java.util.stream.Stream;
 import static java.util.Objects.isNull;
 
 @Component
-public class FravarLinker extends FintLinker<FravarResource> {
+public class FravarsoversiktLinker extends FintLinker<FravarsoversiktResource> {
 
-    public FravarLinker() {
-        super(FravarResource.class);
+    public FravarsoversiktLinker() {
+        super(FravarsoversiktResource.class);
     }
 
-    public void mapLinks(FravarResource resource) {
+    public void mapLinks(FravarsoversiktResource resource) {
         super.mapLinks(resource);
     }
 
     @Override
-    public FravarResources toResources(Collection<FravarResource> collection) {
+    public FravarsoversiktResources toResources(Collection<FravarsoversiktResource> collection) {
         return toResources(collection.stream(), 0, 0, collection.size());
     }
 
     @Override
-    public FravarResources toResources(Stream<FravarResource> stream, int offset, int size, int totalItems) {
-        FravarResources resources = new FravarResources();
+    public FravarsoversiktResources toResources(Stream<FravarsoversiktResource> stream, int offset, int size, int totalItems) {
+        FravarsoversiktResources resources = new FravarsoversiktResources();
         stream.map(this::toResource).forEach(resources::addResource);
         addPagination(resources, offset, size, totalItems);
         return resources;
     }
 
     @Override
-    public String getSelfHref(FravarResource fravar) {
+    public String getSelfHref(FravarsoversiktResource fravar) {
         return getAllSelfHrefs(fravar).findFirst().orElse(null);
     }
 
 
     @Override
-    public Stream<String> getAllSelfHrefs(FravarResource fravar) {
+    public Stream<String> getAllSelfHrefs(FravarsoversiktResource fravar) {
         Stream.Builder<String> builder = Stream.builder();
         if (!isNull(fravar.getSystemId()) && !StringUtils.isEmpty(fravar.getSystemId().getIdentifikatorverdi())) {
             builder.add(createHrefWithId(fravar.getSystemId().getIdentifikatorverdi(), "systemid"));
@@ -52,7 +52,7 @@ public class FravarLinker extends FintLinker<FravarResource> {
         return builder.build();
     }
 
-    int[] hashCodes(FravarResource fravar) {
+    int[] hashCodes(FravarsoversiktResource fravar) {
         IntStream.Builder builder = IntStream.builder();
         if (!isNull(fravar.getSystemId()) && !StringUtils.isEmpty(fravar.getSystemId().getIdentifikatorverdi())) {
             builder.add(fravar.getSystemId().getIdentifikatorverdi().hashCode());
