@@ -31,7 +31,7 @@ import lombok.extern.slf4j.Slf4j;
 import no.fint.event.model.HeaderConstants;
 import no.fint.model.resource.utdanning.vurdering.FravarsoversiktResource;
 import no.fint.model.resource.utdanning.vurdering.FravarsoversiktResources;
-import no.fintlabs.EntityNotFoundException;
+import no.fintlabs.consumer.exception.EntityNotFoundException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
