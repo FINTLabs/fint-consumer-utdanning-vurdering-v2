@@ -88,7 +88,7 @@ public class FravarController {
 //            orgId = props.getDefaultOrgId();
 //        }
 
-        if (!orgId.equals(props.getOrgId())) {
+        if (!props.getOrgId().equals(orgId)) {
             throw new WrongOrgIdException(orgId);
         }
 
