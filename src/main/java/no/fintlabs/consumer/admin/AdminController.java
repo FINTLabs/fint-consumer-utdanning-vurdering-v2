@@ -7,6 +7,7 @@ import no.fint.event.model.health.Health;
 import no.fintlabs.cache.CacheManager;
 import no.fintlabs.consumer.ConsumerService;
 import no.fintlabs.consumer.config.ConsumerProps;
+import no.fintlabs.consumer.config.RestEndpoints;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +19,7 @@ import java.util.stream.Collectors;
 @Slf4j
 @RestController
 @CrossOrigin
-@RequestMapping(value = "admin/", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+@RequestMapping(value = RestEndpoints.ADMIN, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 public class AdminController {
     //
 //    @Autowired

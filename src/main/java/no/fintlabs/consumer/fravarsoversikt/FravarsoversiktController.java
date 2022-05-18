@@ -31,7 +31,10 @@ import lombok.extern.slf4j.Slf4j;
 import no.fint.event.model.HeaderConstants;
 import no.fint.model.resource.utdanning.vurdering.FravarsoversiktResource;
 import no.fint.model.resource.utdanning.vurdering.FravarsoversiktResources;
+import no.fint.relations.FintRelationsMediaType;
 import no.fintlabs.EntityNotFoundException;
+import no.fintlabs.consumer.config.RestEndpoints;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
@@ -40,10 +43,9 @@ import java.util.stream.Stream;
 
 @Slf4j
 //@Api(tags = {"Fravar"})
-//@CrossOrigin
+@CrossOrigin
 @RestController
-//@RequestMapping(name = "Fravar", value = RestEndpoints.FRAVAR, produces = {FintRelationsMediaType.APPLICATION_HAL_JSON_VALUE, MediaType.APPLICATION_JSON_UTF8_VALUE})
-@RequestMapping("Fravarsoversikt")
+@RequestMapping(name = "Fravarsoversikt", value = RestEndpoints.FRAVARSOVERSIKT, produces = {FintRelationsMediaType.APPLICATION_HAL_JSON_VALUE, MediaType.APPLICATION_JSON_UTF8_VALUE})
 public class FravarsoversiktController {
 
     private final FravarsoversiktService fravarsoversiktService;
