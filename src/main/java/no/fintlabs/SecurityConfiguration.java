@@ -1,6 +1,7 @@
 package no.fintlabs;
 
 import no.fintlabs.consumer.config.ConsumerProps;
+import no.vigoiks.resourceserver.security.FintJwtCoreConverter;
 import no.vigoiks.resourceserver.security.FintJwtUserConverter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -32,9 +33,8 @@ public class SecurityConfiguration {
                         .authenticated()
                 )
                 .oauth2ResourceServer((resourceServer) -> resourceServer
-                         //       .jwt(withDefaults())
                         .jwt()
-                        .jwtAuthenticationConverter(new FintJwtUserConverter())
+                        .jwtAuthenticationConverter(new FintJwtCoreConverter())
                 );
         return http.build();
     }

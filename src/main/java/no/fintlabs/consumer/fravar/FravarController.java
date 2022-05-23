@@ -88,9 +88,9 @@ public class FravarController {
 //            orgId = props.getDefaultOrgId();
 //        }
 
-        if (!props.getOrgId().equals(orgId)) {
-            throw new WrongOrgIdException(orgId);
-        }
+        //if (!props.getOrgId().equals(orgId)) {
+          //  throw new WrongOrgIdException(orgId);
+       //  }
 
         String lastUpdated = Long.toString(fravarService.getLastUpdated());
         return Map.of("lastUpdated", lastUpdated);
