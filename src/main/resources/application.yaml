@@ -1,5 +1,5 @@
 server:
-  port : 8080
+  port: 8080
 
 spring:
   security:
@@ -25,3 +25,6 @@ logging:
   level:
     root: INFO
     #org.apache.kafka: DEBUG
+    org:
+      springframework:
+        security: DEBUG
