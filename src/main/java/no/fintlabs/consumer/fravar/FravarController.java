@@ -36,6 +36,9 @@ import no.fintlabs.consumer.exception.EntityNotFoundException;
 import no.fintlabs.consumer.exception.WrongOrgIdException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import no.fint.relations.FintRelationsMediaType;
+import no.fintlabs.consumer.config.RestEndpoints;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
@@ -44,10 +47,9 @@ import java.util.stream.Stream;
 
 @Slf4j
 //@Api(tags = {"Fravar"})
-//@CrossOrigin
+@CrossOrigin
 @RestController
-//@RequestMapping(name = "Fravar", value = RestEndpoints.FRAVAR, produces = {FintRelationsMediaType.APPLICATION_HAL_JSON_VALUE, MediaType.APPLICATION_JSON_UTF8_VALUE})
-@RequestMapping("Fravar")
+@RequestMapping(name = "Fravar", value = RestEndpoints.FRAVAR, produces = {FintRelationsMediaType.APPLICATION_HAL_JSON_VALUE, MediaType.APPLICATION_JSON_UTF8_VALUE})
 public class FravarController {
 
     private final FravarService fravarService;
