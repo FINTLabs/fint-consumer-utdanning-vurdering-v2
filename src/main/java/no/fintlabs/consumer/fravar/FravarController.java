@@ -33,9 +33,6 @@ import no.fint.model.resource.utdanning.vurdering.FravarResource;
 import no.fint.model.resource.utdanning.vurdering.FravarResources;
 import no.fintlabs.consumer.config.ConsumerProps;
 import no.fintlabs.consumer.exception.EntityNotFoundException;
-import no.fintlabs.consumer.exception.WrongOrgIdException;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import no.fint.relations.FintRelationsMediaType;
 import no.fintlabs.consumer.config.RestEndpoints;
 import org.springframework.http.MediaType;
@@ -82,17 +79,13 @@ public class FravarController {
     }
 
     @GetMapping("/last-updated")
-    public Map<String, String> getLastUpdated(@RequestHeader(name = HeaderConstants.ORG_ID, required = false) String orgId) throws WrongOrgIdException {
+    public Map<String, String> getLastUpdated(@RequestHeader(name = HeaderConstants.ORG_ID, required = false) String orgId) {
 //        if (cacheService == null) {
 //            throw new CacheDisabledException("Fravar cache is disabled.");
 //        }
 //        if (props.isOverrideOrgId() || orgId == null) {
 //            orgId = props.getDefaultOrgId();
 //        }
-
-        //if (!props.getOrgId().equals(orgId)) {
-          //  throw new WrongOrgIdException(orgId);
-       //  }
 
         String lastUpdated = Long.toString(fravarService.getLastUpdated());
         return Map.of("lastUpdated", lastUpdated);
@@ -202,12 +195,6 @@ public class FravarController {
 //    //
 //    // Exception handlers
 //    //
-
-    @ExceptionHandler(WrongOrgIdException.class)
-    public ResponseEntity handleEventResponseException(WrongOrgIdException e) {
-        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(e.getMessage());
-    }
-
 //    @ExceptionHandler(EventResponseException.class)
 //    public ResponseEntity handleEventResponseException(EventResponseException e) {
 //        return ResponseEntity.status(e.getStatus()).body(e.getResponse());
