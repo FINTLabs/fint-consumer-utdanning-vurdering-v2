@@ -1,4 +1,4 @@
-package no.fintlabs;
+package no.fintlabs.consumer.exception;
 
 public class EntityNotFoundException extends RuntimeException {
     public EntityNotFoundException(String message) {

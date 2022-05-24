@@ -31,8 +31,9 @@ import lombok.extern.slf4j.Slf4j;
 import no.fint.event.model.HeaderConstants;
 import no.fint.model.resource.utdanning.vurdering.FravarResource;
 import no.fint.model.resource.utdanning.vurdering.FravarResources;
+import no.fintlabs.consumer.config.ConsumerProps;
+import no.fintlabs.consumer.exception.EntityNotFoundException;
 import no.fint.relations.FintRelationsMediaType;
-import no.fintlabs.EntityNotFoundException;
 import no.fintlabs.consumer.config.RestEndpoints;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -55,10 +56,9 @@ public class FravarController {
 //
 //    @Autowired
     private final FravarLinker linker;
-//
-//    @Autowired
-//    private ConsumerProps props;
-//
+
+    private ConsumerProps props;
+
 //    @Autowired
 //    private StatusCache statusCache;
 //
@@ -72,9 +72,10 @@ public class FravarController {
 //    private SynchronousEvents synchronousEvents;
 //
 
-    public FravarController(FravarService cacheRepository, FravarLinker linker) {
+    public FravarController(FravarService cacheRepository, FravarLinker linker, ConsumerProps props) {
         this.fravarService = cacheRepository;
         this.linker = linker;
+        this.props = props;
     }
 
     @GetMapping("/last-updated")
@@ -85,6 +86,7 @@ public class FravarController {
 //        if (props.isOverrideOrgId() || orgId == null) {
 //            orgId = props.getDefaultOrgId();
 //        }
+
         String lastUpdated = Long.toString(fravarService.getLastUpdated());
         return Map.of("lastUpdated", lastUpdated);
     }

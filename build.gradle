@@ -37,6 +37,9 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
     implementation 'io.netty:netty-resolver-dns-native-macos:4.1.72.Final:osx-aarch_64'
 
+    implementation 'no.fintlabs:fint-resource-server-security:1.1.1-rc-1'
+    implementation 'org.springframework.security:spring-security-config:5.6.2'
+
     implementation 'no.fintlabs:fint-kafka:2.0.0'
     implementation "no.fint:fint-utdanning-resource-model-java:${apiVersion}"
     implementation 'no.fintlabs:fint-core-cache:0.1.0'
@@ -45,6 +48,7 @@ dependencies {
         exclude group: 'com.github.springfox.loader'
         exclude group: 'org.springframework.boot'
     }
+
 
     compileOnly 'org.projectlombok:lombok'
     runtimeOnly 'io.micrometer:micrometer-registry-prometheus'

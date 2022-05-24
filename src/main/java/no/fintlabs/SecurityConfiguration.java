@@ -1,5 +1,8 @@
 package no.fintlabs;
 
+import no.fintlabs.consumer.config.ConsumerProps;
+import no.vigoiks.resourceserver.security.FintJwtCoreConverter;
+import no.vigoiks.resourceserver.security.FintJwtUserConverter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
@@ -8,21 +11,30 @@ import org.springframework.security.web.server.SecurityWebFilterChain;
 
 import static org.springframework.security.config.Customizer.withDefaults;
 
-@EnableWebFluxSecurity
+@EnableWebFluxSecurity()
 public class SecurityConfiguration {
 
     @Value("${fint.integration.service.authorized-scope:vigo.no}")
     private String authorizedScope;
 
+    private ConsumerProps consumerProps;
+
+    public SecurityConfiguration(ConsumerProps consumerProps) {
+        this.consumerProps = consumerProps;
+    }
+
     @Bean
     SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity http) {
         http
                 .authorizeExchange((authorize) -> authorize
-                                .pathMatchers("/**")
-                                .authenticated()
+                        .pathMatchers("/**")
+                        .hasAuthority("ORGID_" + consumerProps.getOrgId())
+                        .anyExchange()
+                        .authenticated()
                 )
                 .oauth2ResourceServer((resourceServer) -> resourceServer
-                        .jwt(withDefaults())
+                        .jwt()
+                        .jwtAuthenticationConverter(new FintJwtCoreConverter())
                 );
         return http.build();
     }
