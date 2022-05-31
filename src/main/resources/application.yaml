@@ -21,6 +21,12 @@ fint:
       org-id: fintlabs.no
       domain-context: fint-core
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,prometheus
+
 logging:
   level:
     root: INFO

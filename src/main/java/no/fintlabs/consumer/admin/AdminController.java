@@ -1,5 +1,7 @@
 package no.fintlabs.consumer.admin;
 
+import io.micrometer.core.annotation.Counted;
+import io.micrometer.core.instrument.MeterRegistry;
 import lombok.extern.slf4j.Slf4j;
 import no.fint.event.model.Event;
 import no.fint.event.model.HeaderConstants;
@@ -25,6 +27,8 @@ public class AdminController {
 //    @Autowired
 //    private ConsumerEventUtil consumerEventUtil;
 //
+
+    private MeterRegistry meterRegistry;
 
     @Autowired(required = false)
     private Collection<ConsumerService<?>> consumerServices;
@@ -109,12 +113,16 @@ public class AdminController {
                 );
     }
 
+    @Counted(value = "no_fintlabs_fint_core_consumer_utdanning_vurdering_admin_cache_rebuild")
     @PostMapping({"/cache/rebuild", "/cache/rebuild/{model}"})
     public void rebuildCache(
             @RequestHeader(name = HeaderConstants.ORG_ID) String orgid,
             @RequestHeader(name = HeaderConstants.CLIENT) String client,
             @PathVariable(required = false) String model
     ) {
+        meterRegistry.counter("asdads").
+
+
         // TODO: 04/05/2022 Need changes in core-cache
         throw new UnsupportedOperationException();
 //        log.info("Cache rebuild on {} requested by {}", orgid, client);
