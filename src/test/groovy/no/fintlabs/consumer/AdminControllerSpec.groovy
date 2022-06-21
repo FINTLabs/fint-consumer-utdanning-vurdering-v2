@@ -6,6 +6,23 @@ import no.fintlabs.consumer.config.ConsumerProps
 import spock.lang.Specification
 
 class AdminControllerSpec extends Specification {
+    def "Check given organisations"() {
+        given:
+        def service1 = Mock(ConsumerService) { getCacheUrn() >> "TestValue1" }
+        def service2 = Mock(ConsumerService) { getCacheUrn() >> "TestValue2" }
+        def adminController = new AdminController(Mock(ConsumerProps), Mock(CacheManager))
+        adminController.consumerServices = [service1, service2]
+
+        when:
+        def result = adminController.getOrganisations()
+
+        then:
+        result
+        result.size() == 2
+        result.getAt(0) == "TestValue1"
+        result.getAt(1) == "TestValue2"
+    }
+
     def "Check given assets"() {
         given:
         ConsumerProps consumerProps = Mock() {
@@ -19,5 +36,28 @@ class AdminControllerSpec extends Specification {
         then:
         result.contains("MittFylke.no")
         !result.contains(",")
+    }
+
+    def "Check given caches"() {
+        given:
+        def service1 = Mock(ConsumerService) {
+            getCacheUrn() >> "urn:fintlabs.no:test.no:cache1";
+            getCacheSize() >> 58
+        }
+        def service2 = Mock(ConsumerService) {
+            getCacheUrn() >> "urn:fintlabs.no:test.no:cache2";
+            getCacheSize() >> 179
+        }
+        def adminController = new AdminController(Mock(ConsumerProps), Mock(CacheManager))
+        adminController.consumerServices = [service1, service2]
+
+        when:
+        def result = adminController.getCaches()
+
+        then:
+        result
+        result.size() == 2
+        result.get("urn:fintlabs.no:test.no:cache1") == 58
+        result.get("urn:fintlabs.no:test.no:cache2") == 179
     }
 }

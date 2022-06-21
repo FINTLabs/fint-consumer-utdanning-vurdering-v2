@@ -77,7 +77,7 @@ public class AdminController {
         return !orgId.equals(consumerProps.getOrgId()) ? Collections.EMPTY_LIST : getOrganisations();
     }
 
-    @GetMapping(value = "/assets", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/assets")
     public Collection<String> getAssets() {
         return Set.of(consumerProps.getOrgId());
     }
