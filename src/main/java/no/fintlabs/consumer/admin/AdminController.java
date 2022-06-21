@@ -8,6 +8,7 @@ import no.fintlabs.cache.CacheManager;
 import no.fintlabs.consumer.ConsumerService;
 import no.fintlabs.consumer.config.ConsumerProps;
 import no.fintlabs.consumer.config.RestEndpoints;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -115,12 +116,11 @@ public class AdminController {
             @RequestHeader(name = HeaderConstants.CLIENT) String client,
             @PathVariable(required = false) String model
     ) {
-        // TODO: 04/05/2022 Need changes in core-cache
-        throw new UnsupportedOperationException();
-//        log.info("Cache rebuild on {} requested by {}", orgid, client);
-//        cacheServices.stream()
-//                .filter(cacheService -> StringUtils.isBlank(model) || StringUtils.equalsIgnoreCase(cacheService.getModel(), model))
-//                .forEach(cacheService -> cacheService.populateCache(orgid));
+        log.info("Cache rebuild on {} requested by {}", orgid, client);
+        // TODO: 21/06/2022 bør det være en sjekk på org-id?
+        consumerServices.stream()
+                .filter(cacheService -> StringUtils.isBlank(model) || StringUtils.equalsIgnoreCase(cacheService.getModelName(), model))
+                .forEach(cacheService -> cacheService.resetCache());
     }
 
 }

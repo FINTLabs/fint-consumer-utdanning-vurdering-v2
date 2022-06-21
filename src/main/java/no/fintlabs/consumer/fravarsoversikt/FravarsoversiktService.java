@@ -24,7 +24,7 @@ public class FravarsoversiktService extends ConsumerService<FravarsoversiktResou
     private final FravarsoversiktLinker linker;
 
     public FravarsoversiktService(FravarsoversiktKafkaConsumer fravarKafkaConsumer, FravarsoversiktLinker linker, CacheManager cacheManager, ConsumerProps consumerProps) {
-        super(cacheManager, Fravarsoversikt.class, consumerProps);
+        super(cacheManager, Fravarsoversikt.class, consumerProps, fravarKafkaConsumer);
         this.fravarsoversiktKafkaConsumer = fravarKafkaConsumer;
         this.linker = linker;
     }
@@ -36,7 +36,7 @@ public class FravarsoversiktService extends ConsumerService<FravarsoversiktResou
 
     @PostConstruct
     private void registerKafkaListener() {
-        long retention = fravarsoversiktKafkaConsumer.registerListener(this::addResourceToCache);
+        long retention = fravarsoversiktKafkaConsumer.registerListener(FravarsoversiktResource.class, this::addResourceToCache);
         getCache().setRetentionPeriodInMs(retention);
     }
 
