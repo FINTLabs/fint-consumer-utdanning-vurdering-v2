@@ -46,7 +46,7 @@ import java.util.stream.Stream;
 //@Api(tags = {"Fravar"})
 @CrossOrigin
 @RestController
-@RequestMapping(name = "Fravar", value = RestEndpoints.FRAVAR, produces = {FintRelationsMediaType.APPLICATION_HAL_JSON_VALUE, MediaType.APPLICATION_JSON_UTF8_VALUE})
+@RequestMapping(name = "Fravar", value = RestEndpoints.FRAVAR, produces = {FintRelationsMediaType.APPLICATION_HAL_JSON_VALUE, MediaType.APPLICATION_JSON_VALUE})
 public class FravarController {
 
     private final FravarService fravarService;

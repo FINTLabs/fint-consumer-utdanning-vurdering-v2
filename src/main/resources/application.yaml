@@ -9,7 +9,7 @@ spring:
           issuer-uri: https://idp.felleskomponent.no/nidp/oauth/nam
   kafka:
     consumer:
-      group-id: consumer-utdanning-vurdering
+      group-id: # consumer-utdanning-vurdering-<your-instance-id>
 
 fint:
   consumer:
