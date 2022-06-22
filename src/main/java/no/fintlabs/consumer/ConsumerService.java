@@ -41,8 +41,7 @@ public abstract class ConsumerService<T extends Serializable> {
     }
 
     public void resetCache() {
-        cacheManager.remove(cache);
-        initializeCache(cacheManager, consumerProps, modelName);
+        cache.flush();
         kafkaConsumer.seekToBeginning();
     }
 

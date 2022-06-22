@@ -112,8 +112,8 @@ public class AdminController {
 
     @PostMapping({"/cache/rebuild", "/cache/rebuild/{model}"})
     public void rebuildCache(
-            @RequestHeader(name = HeaderConstants.ORG_ID) String orgid,
-            @RequestHeader(name = HeaderConstants.CLIENT) String client,
+            @RequestHeader(required = false, name = HeaderConstants.ORG_ID) String orgid,
+            @RequestHeader(required = false, name = HeaderConstants.CLIENT) String client,
             @PathVariable(required = false) String model
     ) {
         log.info("Cache rebuild on {} requested by {}", orgid, client);

@@ -1,7 +1,6 @@
 package no.fintlabs.consumer;
 
 import lombok.extern.slf4j.Slf4j;
-import no.fint.model.resource.utdanning.vurdering.FravarResource;
 import no.fintlabs.kafka.common.ListenerBeanRegistrationService;
 import no.fintlabs.kafka.common.OffsetSeekingTrigger;
 import no.fintlabs.kafka.entity.EntityConsumerConfiguration;
@@ -13,7 +12,6 @@ import org.apache.kafka.common.config.TopicConfig;
 import org.springframework.kafka.listener.CommonLoggingErrorHandler;
 import org.springframework.kafka.listener.ConcurrentMessageListenerContainer;
 
-import java.io.Serializable;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 import java.util.function.Consumer;
@@ -28,10 +26,9 @@ public abstract class KafkaConsumer<V> {
     private final OffsetSeekingTrigger resetTrigger;
 
     public KafkaConsumer(
-            EntityConsumerFactoryService entityConsumerFactoryService,
+            String resourceName, EntityConsumerFactoryService entityConsumerFactoryService,
             ListenerBeanRegistrationService listenerBeanRegistrationService,
-            EntityTopicService entityTopicService,
-            String resourceName) {
+            EntityTopicService entityTopicService) {
         this.entityConsumerFactoryService = entityConsumerFactoryService;
         this.listenerBeanRegistrationService = listenerBeanRegistrationService;
         this.entityTopicService = entityTopicService;

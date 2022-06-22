@@ -58,6 +58,4 @@ public class FravarService extends ConsumerService<FravarResource> {
                         .orElse(false)
         );
     }
-
-
 }
