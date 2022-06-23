@@ -66,5 +66,6 @@ spec:
           env:
             - { name: TZ, value: Europe/Oslo }
             - { name: JAVA_TOOL_OPTIONS, value: '-XX:+ExitOnOutOfMemoryError -Xmx480M -verbose:gc' }
-            - { name: fint.consumer.org-id, value: 'fintlabs-no' }
+            - { name: fint.consumer.org-id, value: 'fintlabs.no' }
+            - { name: fint.kafka.topic.org-id, value: 'fintlabs.no' }
             - { name: spring.kafka.consumer.group-id, value: 'consumer-utdanning-vurdering-alpha' }
