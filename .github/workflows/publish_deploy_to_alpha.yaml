@@ -10,7 +10,7 @@ env:
   ALPHA_CLUSTER_NAME: aks-alpha-fint-2021-11-18
   ALPHA_CLUSTER_RESOURCE_GROUP: rg-aks-alpha
   API_CLUSTER_RESOURCE_GROUP: rg-aks-api
-  NAMESPACE: default
+  NAMESPACE: fint-core
 
 jobs:
   build:
@@ -47,7 +47,7 @@ jobs:
         uses: azure/k8s-deploy@v3.0
         with:
          manifests: |
-           k8s.yaml
+           k8s-alpha.yaml
          images: |
            ${{ env.REGISTRY_NAME }}.azurecr.io/${{steps.get_repo.outputs.REPO}}:${{ github.sha }}
          namespace: ${{ env.NAMESPACE }}
