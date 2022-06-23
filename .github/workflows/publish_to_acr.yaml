@@ -13,7 +13,7 @@ env:
   BETA_CLUSTER_RESOURCE_GROUP: rg-aks-beta
   API_CLUSTER_NAME: aks-api-fint-2022-02-08
   API_CLUSTER_RESOURCE_GROUP: rg-aks-api
-  NAMESPACE: default
+  NAMESPACE: fint-core
 
 jobs:
   build:
