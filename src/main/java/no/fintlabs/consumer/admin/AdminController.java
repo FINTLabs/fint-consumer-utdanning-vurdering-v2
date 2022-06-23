@@ -117,10 +117,8 @@ public class AdminController {
             @PathVariable(required = false) String model
     ) {
         log.info("Cache rebuild on {} requested by {}", orgid, client);
-        // TODO: 21/06/2022 bør det være en sjekk på org-id?
         consumerServices.stream()
                 .filter(cacheService -> StringUtils.isBlank(model) || StringUtils.equalsIgnoreCase(cacheService.getModelName(), model))
                 .forEach(cacheService -> cacheService.resetCache());
     }
-
 }
