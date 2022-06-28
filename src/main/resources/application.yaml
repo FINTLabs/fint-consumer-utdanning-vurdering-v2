@@ -27,4 +27,4 @@ logging:
     #org.apache.kafka: DEBUG
     org:
       springframework:
-        security: DEBUG
+        security: INFO

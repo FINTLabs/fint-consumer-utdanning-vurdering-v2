@@ -24,7 +24,7 @@ public class FravarService extends ConsumerService<FravarResource> {
     private final FravarLinker linker;
 
     public FravarService(FravarKafkaConsumer fravarKafkaConsumer, FravarLinker linker, CacheManager cacheManager, ConsumerProps consumerProps) {
-        super(cacheManager, Fravar.class, consumerProps);
+        super(cacheManager, Fravar.class, consumerProps, fravarKafkaConsumer);
         this.fravarKafkaConsumer = fravarKafkaConsumer;
         this.linker = linker;
     }
@@ -36,7 +36,7 @@ public class FravarService extends ConsumerService<FravarResource> {
 
     @PostConstruct
     private void registerKafkaListener() {
-        long retention = fravarKafkaConsumer.registerListener(this::addResourceToCache);
+        long retention = fravarKafkaConsumer.registerListener(FravarResource.class, this::addResourceToCache);
         getCache().setRetentionPeriodInMs(retention);
     }
 
@@ -58,6 +58,4 @@ public class FravarService extends ConsumerService<FravarResource> {
                         .orElse(false)
         );
     }
-
-
 }

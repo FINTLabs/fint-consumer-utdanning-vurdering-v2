@@ -15,11 +15,14 @@ public abstract class ConsumerService<T extends Serializable> {
     private CacheManager cacheManager;
     private final ConsumerProps consumerProps;
     private final String modelName;
+    private final KafkaConsumer<T> kafkaConsumer;
 
-    public ConsumerService(CacheManager cacheManager, Class modelType, ConsumerProps consumerProps) {
+    public ConsumerService(CacheManager cacheManager, Class modelType, ConsumerProps consumerProps, KafkaConsumer<T> kafkaConsumer) {
         this.cacheManager = cacheManager;
         this.consumerProps = consumerProps;
         this.modelName = modelType.getSimpleName().toLowerCase();
+        this.kafkaConsumer = kafkaConsumer;
+
         cache = initializeCache(cacheManager, consumerProps, modelName);
     }
 
@@ -35,6 +38,11 @@ public abstract class ConsumerService<T extends Serializable> {
 
     public int getCacheSize() {
         return cache.size();
+    }
+
+    public void resetCache() {
+        cache.flush();
+        kafkaConsumer.seekToBeginning();
     }
 
     public Stream<T> streamSliceSince(long sinceTimeStamp, int offset, int size) {
