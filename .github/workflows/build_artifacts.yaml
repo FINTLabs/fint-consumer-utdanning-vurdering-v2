@@ -44,7 +44,7 @@ jobs:
           name: ${{steps.get_repo.outputs.REPO}}
           path: ./data/app.jar
 
-# Uncomment to trigger a build and publish image to ACR
+      ## Uncomment to trigger a build and publish image to ACR
       - name: Start publish workflow
         if: github.ref == 'refs/heads/main'
         uses: peter-evans/repository-dispatch@v1
