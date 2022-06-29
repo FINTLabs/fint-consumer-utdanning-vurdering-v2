@@ -3,23 +3,47 @@ kind: OnePasswordItem
 metadata:
   name: aiven-kafka
 spec:
-  itemPath: "vaults/aks-alpha-vault/items/aiven-kafka"
+  itemPath: "vaults/aks-beta-vault/items/aiven-kafka"
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  annotations:
-    service.beta.kubernetes.io/azure-load-balancer-internal: "true"
   labels:
-    io.kompose.service: fint-core-consumer-utdanning-vurdering
-  name: fint-core-consumer-utdanning-vurdering
+    io.kompose.service: fint-core-consumer-utdanning-vurdering-service
+  name: fint-flyt-configuration-service
 spec:
   ports:
-    - name: "8080"
-      port: 8080
-  type: LoadBalancer
+    - port: 8080
+  type: ClusterIP
   selector:
-    io.kompose.service: fint-core-consumer-utdanning-vurdering
+    io.kompose.service: fint-core-consumer-utdanning-vurdering-service
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-fint-flyt-configuration-service
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    nginx.ingress.kubernetes.io/auth-signin: https://$host/oauth2/start?rd=$escaped_request_uri
+    nginx.ingress.kubernetes.io/auth-url: https://$host/oauth2/auth
+    nginx.ingress.kubernetes.io/configuration-snippet: |
+      auth_request_set $token $upstream_http_authorization;
+      proxy_set_header Authorization $token;
+      proxy_pass_header Authorization;
+spec:
+  rules:
+    - host: "beta.felleskomponent.no"
+      http:
+        paths:
+          - path: /utdanning/vurdering
+            pathType: Prefix
+            backend:
+              service:
+                name: fint-core-consumer-utdanning-vurdering-service
+                port:
+                  number: 8080
+
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -65,7 +89,7 @@ spec:
                 name: aiven-kafka
           env:
             - { name: TZ, value: Europe/Oslo }
-            - { name: JAVA_TOOL_OPTIONS, value: '-XX:+ExitOnOutOfMemoryError -Xmx480M -verbose:gc' }
+            - { name: JAVA_TOOL_OPTIONS, value: '-XX:+ExitOnOutOfMemoryError -Xmx480M' }
             - { name: fint.consumer.org-id, value: 'fintlabs.no' }
             - { name: fint.kafka.topic.org-id, value: 'fintlabs.no' }
-            - { name: spring.kafka.consumer.group-id, value: 'consumer-utdanning-vurdering-alpha' }
+            - { name: spring.kafka.consumer.group-id, value: 'consumer-utdanning-vurdering-beta' }

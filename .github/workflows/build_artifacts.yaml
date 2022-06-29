@@ -23,12 +23,20 @@ jobs:
           java-version: '17'
           cache: 'gradle'
 
-      - name: Build artefacts
+      - name: Gradle Wrapper Validation
+        uses: gradle/wrapper-validation-action@v1.0.4
+
+      - name: Gradle Setup
+        uses: gradle/gradle-build-action@v2.1.6
+        with:
+          gradle-version: wrapper
+
+      - name: Gradle build
         run: |
-          gradle build --no-daemon
+          ./gradlew build
           mkdir data
           cp ./build/libs/${GITHUB_REPOSITORY#*/}-*.jar ./data/app.jar
-          echo "Branch: ${{ github.ref}}"
+
 
       - name: Upload a Build Artifact
         uses: actions/upload-artifact@v2.3.1
@@ -36,17 +44,7 @@ jobs:
           name: ${{steps.get_repo.outputs.REPO}}
           path: ./data/app.jar
 
-## Uncomment to trigger deploy to alpha when pull request
-## Use for development. For prod use "Start publish workflow"
-#      - name: Start publish and deploy to ALPHA workflow
-#        if: startsWith(github.event.head_commit.message, 'Merge pull request')
-#        uses: peter-evans/repository-dispatch@v1
-#        with:
-#          token: ${{ secrets.GITHUBACTION_TOKEN }}
-#          repository: ${{ github.repository }}
-#          event-type: trigger-to-publish-deploy-alpha
-
-## Uncomment to trigger a build and publish image to ACR
+# Uncomment to trigger a build and publish image to ACR
       - name: Start publish workflow
         if: github.ref == 'refs/heads/main'
         uses: peter-evans/repository-dispatch@v1
