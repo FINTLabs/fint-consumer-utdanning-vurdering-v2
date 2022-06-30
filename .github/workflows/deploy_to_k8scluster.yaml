@@ -46,7 +46,7 @@ jobs:
         with:
           manifests: k8s/alpha/fintlabs-no.yaml
           images: ${{ env.REGISTRY_NAME }}.azurecr.io/${{steps.get_repo.outputs.REPO}}:${{ github.sha }}
-          namespace: fintlabs-no
+          namespace: fint-core
           action: deploy
 
       ## Beta cluster ##
