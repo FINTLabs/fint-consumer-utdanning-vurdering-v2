@@ -33,7 +33,7 @@ metadata:
       proxy_pass_header Authorization;
 spec:
   rules:
-    - host: "beta.felleskomponent.no"
+    - host: "visma-com-route.beta.felleskomponent.no"
       http:
         paths:
           - path: /utdanning/vurdering
