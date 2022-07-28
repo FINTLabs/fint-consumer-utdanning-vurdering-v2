@@ -1,7 +1,7 @@
 package no.fintlabs.consumer.fravarsoversikt;
 
 import no.fint.model.resource.utdanning.vurdering.FravarsoversiktResource;
-import no.fintlabs.consumer.KafkaConsumer;
+import no.fintlabs.core.consumer.shared.KafkaConsumer;
 import no.fintlabs.kafka.common.ListenerBeanRegistrationService;
 import no.fintlabs.kafka.entity.EntityConsumerFactoryService;
 import no.fintlabs.kafka.entity.topic.EntityTopicService;

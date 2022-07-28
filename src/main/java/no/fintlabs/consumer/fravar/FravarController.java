@@ -31,10 +31,10 @@ import lombok.extern.slf4j.Slf4j;
 import no.fint.event.model.HeaderConstants;
 import no.fint.model.resource.utdanning.vurdering.FravarResource;
 import no.fint.model.resource.utdanning.vurdering.FravarResources;
-import no.fintlabs.consumer.config.ConsumerProps;
 import no.fintlabs.consumer.exception.EntityNotFoundException;
 import no.fint.relations.FintRelationsMediaType;
 import no.fintlabs.consumer.config.RestEndpoints;
+import no.fintlabs.core.consumer.shared.ConsumerProps;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 

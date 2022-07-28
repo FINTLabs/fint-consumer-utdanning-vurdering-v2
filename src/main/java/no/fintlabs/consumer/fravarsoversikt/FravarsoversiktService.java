@@ -7,8 +7,8 @@ import no.fint.model.utdanning.vurdering.Fravarsoversikt;
 import no.fintlabs.cache.Cache;
 import no.fintlabs.cache.CacheManager;
 import no.fintlabs.cache.packing.PackingTypes;
-import no.fintlabs.consumer.ConsumerService;
-import no.fintlabs.consumer.config.ConsumerProps;
+import no.fintlabs.core.consumer.shared.ConsumerProps;
+import no.fintlabs.core.consumer.shared.ConsumerService;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.stereotype.Service;
 
@@ -31,7 +31,7 @@ public class FravarsoversiktService extends ConsumerService<FravarsoversiktResou
 
     @Override
     protected Cache<FravarsoversiktResource> initializeCache(CacheManager cacheManager, ConsumerProps consumerProps, String modelName) {
-        return cacheManager.<FravarsoversiktResource>create(PackingTypes.DEFLATE, consumerProps.getOrgId(), modelName);
+        return cacheManager.<FravarsoversiktResource>create(PackingTypes.POJO, consumerProps.getOrgId(), modelName);
     }
 
     @PostConstruct

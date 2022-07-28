@@ -1,15 +1,12 @@
 package no.fintlabs;
 
-import no.fintlabs.consumer.config.ConsumerProps;
+import no.fintlabs.core.consumer.shared.ConsumerProps;
 import no.vigoiks.resourceserver.security.FintJwtCoreConverter;
-import no.vigoiks.resourceserver.security.FintJwtUserConverter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
 import org.springframework.security.web.server.SecurityWebFilterChain;
-
-import static org.springframework.security.config.Customizer.withDefaults;
 
 @EnableWebFluxSecurity()
 public class SecurityConfiguration {
