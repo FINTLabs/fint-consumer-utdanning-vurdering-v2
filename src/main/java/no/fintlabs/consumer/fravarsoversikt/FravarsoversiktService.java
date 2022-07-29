@@ -8,7 +8,7 @@ import no.fintlabs.cache.Cache;
 import no.fintlabs.cache.CacheManager;
 import no.fintlabs.cache.packing.PackingTypes;
 import no.fintlabs.core.consumer.shared.ConsumerProps;
-import no.fintlabs.core.consumer.shared.ConsumerService;
+import no.fintlabs.core.consumer.shared.resource.ConsumerService;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.stereotype.Service;
 
@@ -48,7 +48,7 @@ public class FravarsoversiktService extends ConsumerService<FravarsoversiktResou
         //log.info("The cache now containes " + this.getCacheSize() + " elements.");
     }
 
-    public Optional<FravarsoversiktResource> getFravarsoversiktBySystemId(String systemId) {
+    public Optional<FravarsoversiktResource> getBySystemId(String systemId) {
         return getCache().getLastUpdatedByFilter(systemId.hashCode(),
                 (resource) -> Optional
                         .ofNullable(resource)

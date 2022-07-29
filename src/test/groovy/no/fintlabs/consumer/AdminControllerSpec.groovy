@@ -3,7 +3,7 @@ package no.fintlabs.consumer
 import no.fintlabs.cache.CacheManager
 import no.fintlabs.consumer.admin.AdminController
 import no.fintlabs.core.consumer.shared.ConsumerProps
-import no.fintlabs.core.consumer.shared.ConsumerService
+import no.fintlabs.core.consumer.shared.resource.ConsumerService
 import spock.lang.Specification
 
 class AdminControllerSpec extends Specification {

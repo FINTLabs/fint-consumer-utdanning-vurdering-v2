@@ -41,7 +41,6 @@ public class FravarLinker extends FintLinker<FravarResource> {
         return getAllSelfHrefs(fravar).findFirst().orElse(null);
     }
 
-
     @Override
     public Stream<String> getAllSelfHrefs(FravarResource fravar) {
         Stream.Builder<String> builder = Stream.builder();
