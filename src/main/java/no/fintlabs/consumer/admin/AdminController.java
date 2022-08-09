@@ -12,6 +12,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
@@ -37,6 +39,13 @@ public class AdminController {
     public AdminController(ConsumerProps consumerProps, CacheManager cacheManager) {
         this.consumerProps = consumerProps;
         this.cacheManager = cacheManager;
+    }
+
+    @GetMapping("status")
+    public ResponseEntity<Map<String, Object>> status(@AuthenticationPrincipal Jwt principal) {
+        return ResponseEntity.ok(Map.of(
+                "status", "Greetings form FINTLabs 👋",
+                "principal", principal));
     }
 
     @GetMapping("/health")
