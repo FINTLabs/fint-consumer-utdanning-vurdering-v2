@@ -82,3 +82,4 @@ spec:
             - { name: fint.consumer.org-id, value: 'fintlabs.no' }
             - { name: fint.kafka.topic.org-id, value: 'fintlabs.no' }
             - { name: spring.kafka.consumer.group-id, value: 'consumer-utdanning-vurdering-beta' }
+            - { name: logging.level.no.finlabs, value: 'DEBUG' }

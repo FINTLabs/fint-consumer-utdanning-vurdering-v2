@@ -82,3 +82,4 @@ spec:
             - { name: fint.consumer.org-id, value: 'visma.com' }
             - { name: fint.kafka.topic.org-id, value: 'visma.com' }
             - { name: spring.kafka.consumer.group-id, value: 'consumer-utdanning-vurdering-beta' }
+            - { name: logging.level.no.finlabs, value: 'DEBUG' }
