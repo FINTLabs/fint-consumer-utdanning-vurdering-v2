@@ -3,14 +3,14 @@ package no.fintlabs.consumer
 import no.fintlabs.cache.CacheManager
 import no.fintlabs.consumer.admin.AdminController
 import no.fintlabs.core.consumer.shared.ConsumerProps
-import no.fintlabs.core.consumer.shared.resource.ConsumerService
+import no.fintlabs.core.consumer.shared.resource.CacheService
 import spock.lang.Specification
 
 class AdminControllerSpec extends Specification {
     def "Check given organisations"() {
         given:
-        def service1 = Mock(ConsumerService) { getCacheUrn() >> "TestValue1" }
-        def service2 = Mock(ConsumerService) { getCacheUrn() >> "TestValue2" }
+        def service1 = Mock(CacheService) { getCacheUrn() >> "TestValue1" }
+        def service2 = Mock(CacheService) { getCacheUrn() >> "TestValue2" }
         def adminController = new AdminController(Mock(ConsumerProps), Mock(CacheManager))
         adminController.consumerServices = [service1, service2]
 
@@ -41,11 +41,11 @@ class AdminControllerSpec extends Specification {
 
     def "Check given caches"() {
         given:
-        def service1 = Mock(ConsumerService) {
+        def service1 = Mock(CacheService) {
             getCacheUrn() >> "urn:fintlabs.no:test.no:cache1";
             getCacheSize() >> 58
         }
-        def service2 = Mock(ConsumerService) {
+        def service2 = Mock(CacheService) {
             getCacheUrn() >> "urn:fintlabs.no:test.no:cache2";
             getCacheSize() >> 179
         }

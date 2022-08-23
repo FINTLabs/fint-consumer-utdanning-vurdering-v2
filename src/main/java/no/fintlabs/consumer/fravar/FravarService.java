@@ -8,7 +8,8 @@ import no.fintlabs.cache.Cache;
 import no.fintlabs.cache.CacheManager;
 import no.fintlabs.cache.packing.PackingTypes;
 import no.fintlabs.core.consumer.shared.ConsumerProps;
-import no.fintlabs.core.consumer.shared.resource.ConsumerService;
+import no.fintlabs.core.consumer.shared.resource.CacheService;
+import no.fintlabs.core.consumer.shared.resource.ConsumerConfig;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.stereotype.Service;
 
@@ -17,21 +18,25 @@ import java.util.Optional;
 
 @Slf4j
 @Service
-public class FravarService extends ConsumerService<FravarResource> {
+public class FravarService extends CacheService<FravarResource> {
 
     private final FravarKafkaConsumer fravarKafkaConsumer;
 
     private final FravarLinker linker;
 
-    public FravarService(FravarKafkaConsumer fravarKafkaConsumer, FravarLinker linker, CacheManager cacheManager, ConsumerProps consumerProps) {
-        super(cacheManager, Fravar.class, consumerProps, fravarKafkaConsumer);
+    public FravarService(
+            FravarKafkaConsumer fravarKafkaConsumer,
+            FravarLinker linker,
+            CacheManager cacheManager,
+            FravarConfig fravarConfig) {
+        super(fravarConfig, cacheManager, fravarKafkaConsumer);
         this.fravarKafkaConsumer = fravarKafkaConsumer;
         this.linker = linker;
     }
 
     @Override
-    protected Cache<FravarResource> initializeCache(CacheManager cacheManager, ConsumerProps consumerProps, String modelName) {
-        return cacheManager.<FravarResource>create(PackingTypes.POJO, consumerProps.getOrgId(), modelName);
+    protected Cache<FravarResource> initializeCache(CacheManager cacheManager, ConsumerConfig<FravarResource> consumerConfig, String modelName) {
+        return cacheManager.<FravarResource>create(PackingTypes.POJO, consumerConfig.getOrgId(), consumerConfig.getResourceName());
     }
 
     @PostConstruct

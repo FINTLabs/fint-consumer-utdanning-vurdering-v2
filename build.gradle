@@ -20,13 +20,13 @@ jar {
 }
 
 repositories {
+    mavenLocal()
     mavenCentral()
     repositories {
         maven {
             url "https://repo.fintlabs.no/releases"
         }
     }
-    mavenLocal()
 }
 
 dependencies {
@@ -48,8 +48,8 @@ dependencies {
         exclude group: 'com.github.springfox.loader'
         exclude group: 'org.springframework.boot'
     }
-    //implementation 'no.fintlabs:fint-core-consumer-shared:0-SNAPSHOT'
-    implementation 'no.fintlabs:fint-core-consumer-shared:0.1.0-rc-2'
+    implementation 'no.fintlabs:fint-core-consumer-shared:0-SNAPSHOT'
+    //implementation 'no.fintlabs:fint-core-consumer-shared:0.1.0-rc-2'
 
     compileOnly 'org.projectlombok:lombok'
     runtimeOnly 'io.micrometer:micrometer-registry-prometheus'
