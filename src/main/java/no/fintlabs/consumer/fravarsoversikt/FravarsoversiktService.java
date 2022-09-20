@@ -7,8 +7,9 @@ import no.fint.model.utdanning.vurdering.Fravarsoversikt;
 import no.fintlabs.cache.Cache;
 import no.fintlabs.cache.CacheManager;
 import no.fintlabs.cache.packing.PackingTypes;
-import no.fintlabs.consumer.ConsumerService;
-import no.fintlabs.consumer.config.ConsumerProps;
+import no.fintlabs.core.consumer.shared.ConsumerProps;
+import no.fintlabs.core.consumer.shared.resource.CacheService;
+import no.fintlabs.core.consumer.shared.resource.ConsumerConfig;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.stereotype.Service;
 
@@ -17,21 +18,25 @@ import java.util.Optional;
 
 @Slf4j
 @Service
-public class FravarsoversiktService extends ConsumerService<FravarsoversiktResource> {
+public class FravarsoversiktService extends CacheService<FravarsoversiktResource> {
 
     private final FravarsoversiktKafkaConsumer fravarsoversiktKafkaConsumer;
 
     private final FravarsoversiktLinker linker;
 
-    public FravarsoversiktService(FravarsoversiktKafkaConsumer fravarKafkaConsumer, FravarsoversiktLinker linker, CacheManager cacheManager, ConsumerProps consumerProps) {
-        super(cacheManager, Fravarsoversikt.class, consumerProps, fravarKafkaConsumer);
+    public FravarsoversiktService(
+            FravarsoversiktKafkaConsumer fravarKafkaConsumer,
+            FravarsoversiktLinker linker,
+            CacheManager cacheManager,
+            FravarsoversiktConfig fravarsoversiktConfig) {
+        super(fravarsoversiktConfig, cacheManager, fravarKafkaConsumer);
         this.fravarsoversiktKafkaConsumer = fravarKafkaConsumer;
         this.linker = linker;
     }
 
     @Override
-    protected Cache<FravarsoversiktResource> initializeCache(CacheManager cacheManager, ConsumerProps consumerProps, String modelName) {
-        return cacheManager.<FravarsoversiktResource>create(PackingTypes.DEFLATE, consumerProps.getOrgId(), modelName);
+    protected Cache<FravarsoversiktResource> initializeCache(CacheManager cacheManager, ConsumerConfig<FravarsoversiktResource> consumerConfig, String modelName) {
+        return cacheManager.<FravarsoversiktResource>create(PackingTypes.POJO, consumerConfig.getOrgId(), consumerConfig.getResourceName());
     }
 
     @PostConstruct
@@ -48,7 +53,7 @@ public class FravarsoversiktService extends ConsumerService<FravarsoversiktResou
         //log.info("The cache now containes " + this.getCacheSize() + " elements.");
     }
 
-    public Optional<FravarsoversiktResource> getFravarsoversiktBySystemId(String systemId) {
+    public Optional<FravarsoversiktResource> getBySystemId(String systemId) {
         return getCache().getLastUpdatedByFilter(systemId.hashCode(),
                 (resource) -> Optional
                         .ofNullable(resource)

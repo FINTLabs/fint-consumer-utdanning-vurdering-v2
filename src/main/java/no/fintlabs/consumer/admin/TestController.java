@@ -1,4 +1,4 @@
-package no.fintlabs.consumer.fravar;
+package no.fintlabs.consumer.admin;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
