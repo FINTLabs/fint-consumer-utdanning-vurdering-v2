@@ -1,20 +1,22 @@
 package no.fintlabs.consumer.config;
 
-import no.fint.relations.config.FintRelationsProps;
 import no.fint.relations.internal.FintLinkMapper;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
-import org.springframework.stereotype.Service;
+import org.springframework.context.annotation.Configuration;
 
-@Service
+import java.util.Map;
+
+@Configuration
 public class CoreConsumerConfig {
 
-    @Bean
-    public FintLinkMapper fintLinkMapper() {
-        return new FintLinkMapper();
-    }
+    @Value("${spring.webflux.base-path:}")
+    private String contextPath;
 
+    @Qualifier("linkMapper")
     @Bean
-    public FintRelationsProps getFintRelationsProps() {
-        return new FintRelationsProps();
+    public Map<String, String> linkMapper() {
+        return LinkMapper.linkMapper(contextPath);
     }
 }

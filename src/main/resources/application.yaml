@@ -22,6 +22,8 @@ fint:
     topic:
       org-id: fintlabs.no
       domain-context: fint-core
+  relations:
+    default-base-url: https://beta.felleskomponent.no
 
 logging:
   level:
