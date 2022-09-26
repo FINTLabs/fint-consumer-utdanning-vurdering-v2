@@ -49,13 +49,13 @@ jobs:
           namespace: fint-core
           action: deploy
 
-      - name: Deploy to Alpha - visma.com
-        uses: azure/k8s-deploy@v4.1
-        with:
-          manifests: k8s/alpha/visma-com.yaml
-          images: ${{ env.REGISTRY_NAME }}.azurecr.io/${{steps.get_repo.outputs.REPO}}:${{ github.sha }}
-          namespace: visma-com
-          action: deploy
+      #- name: Deploy to Alpha - visma.com
+      #  uses: azure/k8s-deploy@v4.1
+      #  with:
+      #    manifests: k8s/alpha/visma-com.yaml
+      #    images: ${{ env.REGISTRY_NAME }}.azurecr.io/${{steps.get_repo.outputs.REPO}}:${{ github.sha }}
+      #    namespace: visma-com
+      #    action: deploy
 
       ## Beta cluster ##
       - name: Set the target Beta cluster.
