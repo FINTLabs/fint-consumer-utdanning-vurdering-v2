@@ -19,10 +19,9 @@ spec:
     io.kompose.service: fint-core-consumer-utdanning-vurdering
 ---
 apiVersion: traefik.containo.us/v1alpha1
-kind: Deployment
+kind: IngressRoute
 metadata:
   name: fint-core-consumer-utdanning-vurdering
-  #namespace: fint-no
 spec:
   entryPoints:
     - web
@@ -31,7 +30,6 @@ spec:
       kind: Rule
       services:
         - name: fint-core-consumer-utdanning-vurdering
-          #namespace: fint-no
           port: 8080
 ---
 apiVersion: apps/v1
