@@ -8,18 +8,29 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  annotations:
-    service.beta.kubernetes.io/azure-load-balancer-internal: "true"
   labels:
     io.kompose.service: fint-core-consumer-utdanning-vurdering
   name: fint-core-consumer-utdanning-vurdering
 spec:
   ports:
-    - name: "8080"
-      port: 8080
-  type: LoadBalancer
+    - port: 8080
+  type: ClusterIP
   selector:
     io.kompose.service: fint-core-consumer-utdanning-vurdering
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: fint-core-consumer-utdanning-vurdering
+spec:
+  entryPoints:
+    - web
+  routes:
+    - match: Host(`alpha.felleskomponent.no`) && (PathPrefix( `/utdanning/vurdering`) || Path(`/utdanning/vurdering/admin`)) && Headers(`x-org-id`, `fintlabs.no`)
+      kind: Rule
+      services:
+        - name: fint-core-consumer-utdanning-vurdering
+          port: 8080
 ---
 apiVersion: apps/v1
 kind: Deployment
