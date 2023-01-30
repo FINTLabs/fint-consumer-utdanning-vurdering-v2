@@ -1,6 +1,7 @@
 package no.fintlabs.consumer.elevfravar;
 
 import lombok.extern.slf4j.Slf4j;
+import no.fint.antlr.FintFilterService;
 import no.fint.model.resource.utdanning.vurdering.ElevfravarResource;
 import no.fint.relations.FintRelationsMediaType;
 import no.fintlabs.consumer.config.RestEndpoints;
@@ -16,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(name = "Elevfravar", value = RestEndpoints.ELEVFRAVAR, produces = {FintRelationsMediaType.APPLICATION_HAL_JSON_VALUE, MediaType.APPLICATION_JSON_VALUE})
 public class ElevfravarController extends ConsumerRestController<ElevfravarResource> {
 
-    public ElevfravarController(ElevfravarService elevfravarService, ElevfravarLinker elevfravarLinker) {
-        super(elevfravarService, elevfravarLinker);
+    public ElevfravarController(ElevfravarService elevfravarService, ElevfravarLinker elevfravarLinker, FintFilterService oDataFilterService) {
+        super(elevfravarService, elevfravarLinker, oDataFilterService);
     }
 }

@@ -1,6 +1,7 @@
 package no.fintlabs.consumer.fravarsoversikt;
 
 import lombok.extern.slf4j.Slf4j;
+import no.fint.antlr.FintFilterService;
 import no.fint.model.resource.utdanning.vurdering.FravarsoversiktResource;
 import no.fint.relations.FintRelationsMediaType;
 import no.fintlabs.consumer.config.RestEndpoints;
@@ -16,8 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(name = "Fravarsoversikt", value = RestEndpoints.FRAVARSOVERSIKT, produces = {FintRelationsMediaType.APPLICATION_HAL_JSON_VALUE, MediaType.APPLICATION_JSON_VALUE})
 public class FravarsoversiktController extends ConsumerRestController<FravarsoversiktResource> {
 
-    public FravarsoversiktController(FravarsoversiktService cacheRepository, FravarsoversiktLinker linker) {
-        super(cacheRepository, linker);
+    public FravarsoversiktController(FravarsoversiktService cacheRepository, FravarsoversiktLinker linker, FintFilterService oDataFilterService) {
+        super(cacheRepository, linker, oDataFilterService);
     }
 
 }
