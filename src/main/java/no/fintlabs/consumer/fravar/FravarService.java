@@ -3,11 +3,9 @@ package no.fintlabs.consumer.fravar;
 import lombok.extern.slf4j.Slf4j;
 import no.fint.model.felles.kompleksedatatyper.Identifikator;
 import no.fint.model.resource.utdanning.vurdering.FravarResource;
-import no.fint.model.utdanning.vurdering.Fravar;
 import no.fintlabs.cache.Cache;
 import no.fintlabs.cache.CacheManager;
 import no.fintlabs.cache.packing.PackingTypes;
-import no.fintlabs.core.consumer.shared.ConsumerProps;
 import no.fintlabs.core.consumer.shared.resource.CacheService;
 import no.fintlabs.core.consumer.shared.resource.ConsumerConfig;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
@@ -46,11 +44,10 @@ public class FravarService extends CacheService<FravarResource> {
     }
 
     private void addResourceToCache(ConsumerRecord<String, FravarResource> consumerRecord) {
+        this.eventLogger.logDataRecieved();
         FravarResource fravarResource = consumerRecord.value();
         linker.mapLinks(fravarResource);
         this.getCache().put(consumerRecord.key(), fravarResource, linker.hashCodes(fravarResource));
-
-        //log.info("The cache now containes " + this.getCacheSize() + " elements.");
     }
 
     @Override
