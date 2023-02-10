@@ -42,9 +42,13 @@ public class ElevfravarService extends CacheService<ElevfravarResource> {
 
     private void addResourceToCache(ConsumerRecord<String, ElevfravarResource> consumerRecord) {
         this.eventLogger.logDataRecieved();
-        ElevfravarResource elevFravarResource = consumerRecord.value();
-        linker.mapLinks(elevFravarResource);
-        getCache().put(consumerRecord.key(), elevFravarResource, linker.hashCodes(elevFravarResource));
+        if (consumerRecord.value() == null) {
+            getCache().remove(consumerRecord.key());
+        } else {
+            ElevfravarResource elevFravarResource = consumerRecord.value();
+            linker.mapLinks(elevFravarResource);
+            getCache().put(consumerRecord.key(), elevFravarResource, linker.hashCodes(elevFravarResource));
+        }
     }
 
     @Override
