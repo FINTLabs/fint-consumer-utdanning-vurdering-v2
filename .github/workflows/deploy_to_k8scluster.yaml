@@ -57,6 +57,14 @@ jobs:
           namespace: visma-com
           action: deploy
 
+      - name: Deploy to Alpha - viken.no
+        uses: azure/k8s-deploy@v4.1
+        with:
+          manifests: k8s/alpha/visma-com.yaml
+          images: ${{ env.REGISTRY_NAME }}.azurecr.io/${{steps.get_repo.outputs.REPO}}:${{ github.sha }}
+          namespace: viken-no
+          action: deploy
+
       ## Beta cluster ##
       - name: Set the target Beta cluster.
         uses: azure/aks-set-context@v1
