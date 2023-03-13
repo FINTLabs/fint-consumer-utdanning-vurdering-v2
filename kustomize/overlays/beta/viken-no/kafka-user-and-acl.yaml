@@ -1,0 +1,8 @@
+apiVersion: "fintlabs.no/v1alpha1"
+kind: KafkaUserAndAcl
+metadata:
+  name: fint-core-consumer-utdanning-vurdering
+spec:
+  acls:
+    - permission: admin
+      topic: "viken-no.fint-core.*"

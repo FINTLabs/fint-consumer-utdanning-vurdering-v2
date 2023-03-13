@@ -1,0 +1,16 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - ../../../base
+patchesStrategicMerge:
+  - config-map.yaml
+  - kafka-user-and-acl.yaml
+  - ingress-route.yaml
+commonLabels:
+  app.kubernetes.io/name: fint-core-consumer-utdanning-vurdering
+  app.kubernetes.io/instance: fint-core-consumer-utdanning-vurdering_viken-no
+  app.kubernetes.io/version: latest
+  app.kubernetes.io/component: backend
+  app.kubernetes.io/part-of: fint-core
+  fintlabs.no/team: core
+  fintlabs.no/org-id: viken.no
