@@ -33,11 +33,10 @@ jobs:
 #            cluster: aks-pwf-fint-2021-10-20
 #            resource_group: rg-aks-pwf
         exclude:
-          - environment: beta
-          - environment: alpha
-            org: viken-no
-          - environment: alpha
-            org: visma-com
+          - org: viken-no
+            environment: [beta, alpha]
+          - org: visma-com
+            environment: alpha
 
     steps:
       - name: Checkout repository
