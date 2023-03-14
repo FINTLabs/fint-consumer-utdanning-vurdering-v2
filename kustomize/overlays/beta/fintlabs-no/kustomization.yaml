@@ -5,7 +5,6 @@ resources:
   - ../../../base
 patchesStrategicMerge:
   - config-map.yaml
-  - kafka-user-and-acl.yaml
   - ingress-route.yaml
 commonLabels:
   app.kubernetes.io/name: fint-core-consumer-utdanning-vurdering
@@ -15,3 +14,11 @@ commonLabels:
   app.kubernetes.io/part-of: fint-core
   fintlabs.no/team: core
   fintlabs.no/org-id: fintlabs.no
+patches:
+  - patch: |-
+      - op: replace
+        path: "/spec/acls/0/topic"
+        value: "fintlabs-no.fint-core.*"
+    target:
+      kind: KafkaUserAndAcl
+      name: fint-core-consumer-utdanning-vurdering
