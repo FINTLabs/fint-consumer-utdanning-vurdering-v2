@@ -89,4 +89,5 @@ jobs:
         with:
           manifests: ${{ steps.bake.outputs.manifestsBundle }}
           images: ${{ steps.meta.outputs.tags }}
+          namespace: ${{ steps.bake.outputs.namespace }}
           action: deploy
