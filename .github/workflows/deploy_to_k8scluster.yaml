@@ -8,18 +8,20 @@ on:
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
-  ALPHA:
 
 jobs:
   deploy-to-kubernetes:
-    name: deploy to ${{ matrix.org }} in ${{ matrix.cluster }}
+    name: deploy for ${{ matrix.org }} in ${{ matrix.cluster }}
     runs-on: ubuntu-latest
     permissions:
       contents: read
       packages: write
     strategy:
       matrix:
-        org: [viken-no]
+        org:
+          - fintlabs-no
+          - viken-no
+          - visma-com
         cluster:
           - aks-alpha-fint-2021-11-18
           - aks-beta-fint-2021-11-23
@@ -89,5 +91,5 @@ jobs:
         with:
           manifests: ${{ steps.bake.outputs.manifestsBundle }}
           images: ${{ steps.meta.outputs.tags }}
-          namespace: ${{ steps.bake.outputs.namespace }}
+          namespace: ${{ matrix.org }}
           action: deploy
