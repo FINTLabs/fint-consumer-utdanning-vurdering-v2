@@ -6,7 +6,7 @@ spec:
   entryPoints:
     - web
   routes:
-    - match: Host(`alpha.felleskomponent.no`) && PathPrefix(`/utdanning/vurdering/elevfravar`) && Headers(`x-org-id`, `viken.no`)
+    - match: "Host(`alpha.felleskomponent.no`) && PathPrefix(`/utdanning/vurdering/elevfravar`) && Headers(`x-org-id`, `viken.no`)"
       kind: Rule
       services:
         - name: fint-core-consumer-utdanning-vurdering
