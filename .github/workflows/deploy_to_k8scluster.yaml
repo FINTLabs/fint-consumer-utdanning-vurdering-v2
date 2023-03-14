@@ -12,7 +12,7 @@ env:
 
 jobs:
   deploy-to-kubernetes:
-    name: deploy to ${{ matrix.cluster }} for ${{ matrix.org }}
+    name: deploy to ${{ matrix.org }} in ${{ matrix.cluster }}
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -81,8 +81,8 @@ jobs:
         uses: azure/aks-set-context@v1
         with:
           creds: "${{ secrets[format('AKS_{0}_FINT_GITHUB', steps.environment.outputs.result)] }}"
-          cluster-name: ${{ matrix.environment.cluster }}
-          resource-group: ${{ matrix.environment.resource_group }}
+          cluster-name: ${{ matrix.cluster }}
+          resource-group: ${{ steps.rg.outputs.result }}
 
       - name: Deploy
         uses: azure/k8s-deploy@v4.9
