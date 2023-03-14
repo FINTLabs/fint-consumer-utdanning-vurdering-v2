@@ -8,6 +8,7 @@ on:
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
+  ALPHA:
 
 jobs:
   deploy-to-kubernetes:
@@ -18,25 +19,12 @@ jobs:
       packages: write
     strategy:
       matrix:
-        org: [fintlabs-no, visma-com, viken-no]
-        environment:
-          - name: alpha
-            cluster: aks-alpha-fint-2021-11-18
-            resource_group: rg-aks-alpha
-          - name: beta
-            cluster: aks-beta-fint-2021-11-23
-            resource_group: rg-aks-beta
-#          - name: api
-#            cluster: aks-api-fint-2022-02-08
-#            resource_group: rg-aks-api
-#          - name: pwf
-#            cluster: aks-pwf-fint-2021-10-20
-#            resource_group: rg-aks-pwf
-        exclude:
-          - org: viken-no
-            environment: [beta, alpha]
-          - org: visma-com
-            environment: alpha
+        org: [viken-no]
+        cluster:
+          - aks-alpha-fint-2021-11-18
+          - aks-beta-fint-2021-11-23
+#          - aks-api-fint-2022-02-08
+#          - aks-pwf-fint-2021-10-20
 
     steps:
       - name: Checkout repository
@@ -69,12 +57,30 @@ jobs:
         uses: azure/k8s-bake@v2.4
         with:
           renderEngine: 'kustomize'
-          kustomizationPath: 'kustomize/overlays/${{ matrix.environment.name }}/${{ matrix.org }}'
+          kustomizationPath: 'kustomize/overlays/${{ matrix.cluster }}/${{ matrix.org }}'
+
+      - uses: actions/github-script@v6
+        name: Get resource group name
+        id: rg
+        with:
+          script: |
+            const a = '${{ matrix.cluster }}'.split('-')
+            return `rg-${a[0]}-${a[1]}`
+          result-encoding: string
+
+      - uses: actions/github-script@v6
+        name: Get environment
+        id: environment
+        with:
+          script: |
+            const a = '${{ matrix.cluster }}'.split('-')
+            return `${a[1]}`
+          result-encoding: string
 
       - name: Set the target cluster
         uses: azure/aks-set-context@v1
         with:
-          creds: "${{ secrets[format('AKS_{0}_FINT_GITHUB', matrix.environment.name)] }}"
+          creds: "${{ secrets[format('AKS_{0}_FINT_GITHUB', steps.environment.outputs.result)] }}"
           cluster-name: ${{ matrix.environment.cluster }}
           resource-group: ${{ matrix.environment.resource_group }}
 
@@ -83,5 +89,5 @@ jobs:
         with:
           manifests: ${{ steps.bake.outputs.manifestsBundle }}
           images: ${{ steps.meta.outputs.tags }}
-          namespace: ${{ env.NAMESPACE }}
+          namespace: ${{ matrix.org }}
           action: deploy
