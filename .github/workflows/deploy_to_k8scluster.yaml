@@ -12,7 +12,7 @@ env:
 
 jobs:
   deploy-to-kubernetes:
-    name: deploy ${{ matrix.org }} to ${{ matrix.environment.name }}
+    name: deploy to ${{ matrix.cluster }} for ${{ matrix.org }}
     runs-on: ubuntu-latest
     permissions:
       contents: read
