@@ -19,7 +19,7 @@ jobs:
     strategy:
       matrix:
         org:
-          - fint-core
+          - fintlabs-no
 #          - viken-no
 #          - visma-com
         cluster:
