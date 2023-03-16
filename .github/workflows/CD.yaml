@@ -100,5 +100,5 @@ jobs:
         with:
           action: deploy
           manifests: ${{ steps.bake.outputs.manifestsBundle }}
-          images: ${{ sneeds.build-and-push.outputs.tags }}
+          images: ${{ needs.build-and-push.outputs.tags }}
           namespace: ${{ matrix.org }}
