@@ -56,11 +56,18 @@ jobs:
           - fintlabs-no
           - viken-no
           - visma-com
+          - ude-oslo-kommune-no
+          - innlandetfylke-no
         cluster:
           - aks-alpha-fint-2021-11-18
           - aks-beta-fint-2021-11-23
-#          - aks-api-fint-2022-02-08
-#          - aks-pwf-fint-2021-10-20
+        #          - aks-api-fint-2022-02-08
+        #          - aks-pwf-fint-2021-10-20
+        exclude:
+          - org: innlandetfylke-no
+            cluster: aks-alpha-fint-2021-11-18
+          - org: ude-oslo-kommune-no
+            cluster: aks-alpha-fint-2021-11-18
 
     steps:
       - name: Checkout repository
