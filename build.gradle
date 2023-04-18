@@ -35,11 +35,10 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-webflux'
     implementation 'org.springframework.kafka:spring-kafka'
     implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
+    implementation 'org.springframework.security:spring-security-config'
     implementation 'io.netty:netty-resolver-dns-native-macos:4.1.89.Final:osx-aarch_64'
 
-    implementation 'no.fintlabs:fint-resource-server-security:1.1.1-rc-2'
-    implementation 'org.springframework.security:spring-security-config'
-
+    implementation 'no.fintlabs:fint-resource-server-security:1.1.1-rc-3'
     implementation 'no.fintlabs:fint-kafka:2.4.0'
     implementation "no.fint:fint-utdanning-resource-model-java:${apiVersion}"
     implementation 'no.fintlabs:fint-core-cache:0.3.0'
