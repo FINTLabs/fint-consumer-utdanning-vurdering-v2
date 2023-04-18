@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: fint-core-consumer-utdanning-vurdering
+data:
+  fint.consumer.org-id: 'mrfylke.no'
+  fint.kafka.topic.org-id: 'mrfylke.no'
+  spring.kafka.consumer.group-id: 'consumer-utdanning-vurdering-beta'
+  fint.relations.default-base-url: 'https://beta.felleskomponent.no'
