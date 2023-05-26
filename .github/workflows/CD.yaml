@@ -53,18 +53,16 @@ jobs:
     strategy:
       matrix:
         org:
-          - fintlabs-no
-          - viken-no
-          - visma-com
-          - ude-oslo-kommune-no
-          - innlandetfylke-no
           - agderfk-no
-          - vlfk-no
+          - innlandetfylke-no
           - mrfylke-no
-          - vtfk-no
-          - trondelagfylke-no
           - nfk-no
           - tffk-no
+          - trondelagfylke-no
+          - ude-oslo-kommune-no
+          - viken-no
+          - vlfk-no
+          - vtfk-no
         cluster:
 #          - aks-alpha-fint-2021-11-18
           - aks-beta-fint-2021-11-23
