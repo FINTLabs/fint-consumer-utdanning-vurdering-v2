@@ -11,6 +11,7 @@ import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import java.io.Serializable;
 import java.util.Optional;
 
 @Service
@@ -19,19 +20,28 @@ public class ElevfravarService extends CacheService<ElevfravarResource> {
 
     private final ElevfravarLinker linker;
 
+    private final MetricService metricService;
+
     public ElevfravarService(
             ElevfravarConfig elevfravarConfig,
             CacheManager cacheManager,
             ElevfravarKafkaConsumer elevfravarKafkaConsumer,
-            ElevfravarLinker linker) {
+            ElevfravarLinker linker,
+            MetricService metricService) {
         super(elevfravarConfig, cacheManager, elevfravarKafkaConsumer);
         this.elevfravarKafkaConsumer = elevfravarKafkaConsumer;
         this.linker = linker;
+        this.metricService = metricService;
     }
 
     @Override
     protected Cache<ElevfravarResource> initializeCache(CacheManager cacheManager, ConsumerConfig<ElevfravarResource> consumerConfig, String s) {
-        return cacheManager.create(PackingTypes.POJO, consumerConfig.getOrgId(), consumerConfig.getResourceName());
+        Cache<ElevfravarResource> cache = cacheManager.create(PackingTypes.POJO, consumerConfig.getOrgId(), consumerConfig.getResourceName());
+
+        // temporary custom code to test metrics:
+        metricService.register(consumerConfig.getDomainName(), consumerConfig.getPackageName(), consumerConfig.getResourceName(), cache);
+
+        return cache;
     }
 
     @PostConstruct
