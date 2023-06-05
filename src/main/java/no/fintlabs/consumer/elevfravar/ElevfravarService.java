@@ -38,7 +38,7 @@ public class ElevfravarService extends CacheService<ElevfravarResource> {
         Cache<ElevfravarResource> cache = cacheManager.create(PackingTypes.POJO, consumerConfig.getOrgId(), consumerConfig.getResourceName());
 
         // temporary custom code to test metrics:
-        metricService.register(consumerConfig.getDomainName(), consumerConfig.getPackageName(), consumerConfig.getResourceName(), cache);
+        metricService.register(consumerConfig.getDomainName(), consumerConfig.getPackageName(), consumerConfig.getResourceName(), consumerConfig.getOrgId(), cache);
 
         return cache;
     }
