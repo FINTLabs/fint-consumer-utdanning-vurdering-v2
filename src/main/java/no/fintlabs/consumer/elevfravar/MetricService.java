@@ -16,7 +16,7 @@ public class MetricService {
     }
 
     public void register(String domain, String fintPackage, String resource, String orgId, Cache<?> cache) {
-        String metricName = "fint-core-cache-size" + domain + "-" + fintPackage + "-" + resource;
+        String metricName = "fint-core-cache-size";
         Gauge
                 .builder(metricName, cache, Cache::size)
                 .tag("domain", domain)
