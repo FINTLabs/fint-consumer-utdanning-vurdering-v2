@@ -11,7 +11,7 @@ public class MetricService {
 
     private final MeterRegistry meterRegistry;
 
-    public MetricService(SimpleMeterRegistry meterRegistry) {
+    public MetricService(MeterRegistry meterRegistry) {
         this.meterRegistry = meterRegistry;
     }
 
