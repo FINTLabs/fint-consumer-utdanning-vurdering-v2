@@ -1,5 +1,6 @@
 package no.fintlabs.consumer.elevfravar;
 
+import lombok.extern.slf4j.Slf4j;
 import no.fint.model.felles.kompleksedatatyper.Identifikator;
 import no.fint.model.resource.utdanning.vurdering.ElevfravarResource;
 import no.fintlabs.cache.Cache;
@@ -14,14 +15,16 @@ import org.springframework.stereotype.Service;
 import javax.annotation.PostConstruct;
 import java.util.Optional;
 
+@Slf4j
 @Service
-@DependsOn("metricService")
 public class ElevfravarService extends CacheService<ElevfravarResource> {
     private final ElevfravarKafkaConsumer elevfravarKafkaConsumer;
 
     private final ElevfravarLinker linker;
 
     private final MetricService metricService;
+
+    private final ElevfravarConfig elevfravarConfig;
 
     public ElevfravarService(
             ElevfravarConfig elevfravarConfig,
@@ -33,16 +36,28 @@ public class ElevfravarService extends CacheService<ElevfravarResource> {
         this.elevfravarKafkaConsumer = elevfravarKafkaConsumer;
         this.linker = linker;
         this.metricService = metricService;
+        this.elevfravarConfig = elevfravarConfig;
     }
 
     @Override
     protected Cache<ElevfravarResource> initializeCache(CacheManager cacheManager, ConsumerConfig<ElevfravarResource> consumerConfig, String s) {
-        Cache<ElevfravarResource> cache = cacheManager.create(PackingTypes.POJO, consumerConfig.getOrgId(), consumerConfig.getResourceName());
+        return cacheManager.create(PackingTypes.POJO, consumerConfig.getOrgId(), consumerConfig.getResourceName());
+    }
 
-        // temporary custom code to test metrics:
-        metricService.register(consumerConfig.getDomainName(), consumerConfig.getPackageName(), consumerConfig.getResourceName(), consumerConfig.getOrgId(), cache);
+    // temporary custom code to test metrics:
+    @PostConstruct()
+    private void registerMetric() {
+        while (getCache() == null){
+            log.warn("Cache is null. Will wait 5 seconds before register metrics");
 
-        return cache;
+            try {
+                Thread.sleep(5000);
+            } catch (InterruptedException e) {
+                log.debug("Failed to wait");
+            }
+        }
+
+        metricService.register(elevfravarConfig.getDomainName(), elevfravarConfig.getPackageName(), elevfravarConfig.getResourceName(), elevfravarConfig.getOrgId(), getCache());
     }
 
     @PostConstruct
