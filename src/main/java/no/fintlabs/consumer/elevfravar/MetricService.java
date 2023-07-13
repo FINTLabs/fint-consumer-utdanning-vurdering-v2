@@ -2,7 +2,6 @@ package no.fintlabs.consumer.elevfravar;
 
 import io.micrometer.core.instrument.Gauge;
 import io.micrometer.core.instrument.MeterRegistry;
-import io.micrometer.core.instrument.simple.SimpleMeterRegistry;
 import no.fintlabs.cache.Cache;
 import org.springframework.stereotype.Service;
 

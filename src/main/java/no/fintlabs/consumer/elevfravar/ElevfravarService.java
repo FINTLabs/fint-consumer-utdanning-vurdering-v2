@@ -8,12 +8,14 @@ import no.fintlabs.cache.packing.PackingTypes;
 import no.fintlabs.core.consumer.shared.resource.CacheService;
 import no.fintlabs.core.consumer.shared.resource.ConsumerConfig;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import java.util.Optional;
 
 @Service
+@DependsOn("metricService")
 public class ElevfravarService extends CacheService<ElevfravarResource> {
     private final ElevfravarKafkaConsumer elevfravarKafkaConsumer;
 
