@@ -14,16 +14,6 @@ public class FravarConfig extends ConsumerConfig<FravarResource> {
     }
 
     @Override
-    protected String domainName() {
-        return "utdanning";
-    }
-
-    @Override
-    protected String packageName() {
-        return "vurdering";
-    }
-
-    @Override
     protected String resourceName() {
         return "fravar";
     }

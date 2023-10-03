@@ -13,16 +13,6 @@ public class ElevfravarConfig extends ConsumerConfig<ElevfravarResource> {
     }
 
     @Override
-    protected String domainName() {
-        return "utdanning";
-    }
-
-    @Override
-    protected String packageName() {
-        return "vurdering";
-    }
-
-    @Override
     protected String resourceName() {
         return "elevfravar";
     }
