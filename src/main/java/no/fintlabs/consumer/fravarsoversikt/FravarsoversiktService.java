@@ -1,5 +1,6 @@
 package no.fintlabs.consumer.fravarsoversikt;
 
+import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 import no.fint.model.felles.kompleksedatatyper.Identifikator;
 import no.fint.model.resource.utdanning.vurdering.FravarsoversiktResource;
@@ -11,7 +12,6 @@ import no.fintlabs.core.consumer.shared.resource.ConsumerConfig;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.PostConstruct;
 import java.util.Optional;
 
 @Slf4j
