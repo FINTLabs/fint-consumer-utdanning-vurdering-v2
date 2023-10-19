@@ -17,10 +17,6 @@ configurations {
     }
 }
 
-jar {
-    enabled = false
-}
-
 repositories {
     mavenLocal()
     mavenCentral()
@@ -72,6 +68,10 @@ dependencies {
     //testImplementation 'org.springframework.kafka:spring-kafka-test'
     //testImplementation 'org.springframework.security:spring-security-test'
 
+}
+
+jar {
+    enabled = false
 }
 
 test {
