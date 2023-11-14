@@ -63,6 +63,13 @@ jobs:
           - viken-no
           - vlfk-no
           - vtfk-no
+          - ofk-no
+          - bfk-no
+          - afk-no
+          - vestfoldfylke-no
+          - telemarkfylke-no
+          - tromsfylke-no
+          - ffk-no
         cluster:
 #          - aks-alpha-fint-2021-11-18
           - aks-beta-fint-2021-11-23
