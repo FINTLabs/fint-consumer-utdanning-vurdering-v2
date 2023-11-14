@@ -2,7 +2,7 @@ package no.fintlabs.consumer
 
 import no.fintlabs.cache.CacheManager
 import no.fintlabs.consumer.admin.AdminController
-import no.fintlabs.core.consumer.shared.ConsumerProps
+import no.fintlabs.core.consumer.shared.config.ConsumerProps
 import no.fintlabs.core.consumer.shared.resource.CacheService
 import spock.lang.Specification
 

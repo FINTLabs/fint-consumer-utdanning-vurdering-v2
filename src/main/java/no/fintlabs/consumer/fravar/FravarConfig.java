@@ -2,7 +2,7 @@ package no.fintlabs.consumer.fravar;
 
 import no.fint.model.resource.utdanning.vurdering.FravarResource;
 import no.fint.model.resource.utdanning.vurdering.FravarsoversiktResource;
-import no.fintlabs.core.consumer.shared.ConsumerProps;
+import no.fintlabs.core.consumer.shared.config.ConsumerProps;
 import no.fintlabs.core.consumer.shared.resource.ConsumerConfig;
 import org.springframework.stereotype.Component;
 
