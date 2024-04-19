@@ -9,9 +9,9 @@ patchesStrategicMerge:
   - kafka-user-and-acl.yaml
 commonLabels:
   app.kubernetes.io/name: fint-core-consumer-utdanning-vurdering
-  app.kubernetes.io/instance: fint-core-consumer-utdanning-vurdering_ude-oslo-kommune-no
+  app.kubernetes.io/instance: fint-core-consumer-utdanning-vurdering_ude_oslo_kommune_no
   app.kubernetes.io/version: latest
   app.kubernetes.io/component: backend
   app.kubernetes.io/part-of: fint-core
   fintlabs.no/team: core
-  fintlabs.no/org-id: ude-oslo-kommune-no
+  fintlabs.no/org-id: ude.oslo.kommune.no

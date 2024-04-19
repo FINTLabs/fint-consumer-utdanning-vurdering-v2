@@ -9,7 +9,7 @@ patchesStrategicMerge:
   - kafka-user-and-acl.yaml
 commonLabels:
   app.kubernetes.io/name: fint-core-consumer-utdanning-vurdering
-  app.kubernetes.io/instance: fint-core-consumer-utdanning-vurdering_bfk-no
+  app.kubernetes.io/instance: fint-core-consumer-utdanning-vurdering_bfk_no
   app.kubernetes.io/version: latest
   app.kubernetes.io/component: backend
   app.kubernetes.io/part-of: fint-core

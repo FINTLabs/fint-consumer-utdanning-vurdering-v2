@@ -6,7 +6,7 @@ spec:
   entryPoints:
     - web
   routes:
-    - match: "Host(`api.felleskomponent.no`) && (PathPrefix(`/utdanning/vurdering/elevfravar`)) && Headers(`x-org-id`, `innlandetfylke.no`)"
+    - match: "Host(`api.felleskomponent.no`) && (PathPrefix(`/utdanning/vurdering/elevfravar`) || PathPrefix(`/utdanning/vurdering/fravarsregistrering`)) && Headers(`x-org-id`, `innlandetfylke.no`)"
       kind: Rule
       services:
         - name: fint-core-consumer-utdanning-vurdering
