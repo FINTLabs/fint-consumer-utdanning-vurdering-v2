@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 @CrossOrigin
 @RestController
-@RequestMapping(name = "Fravarsregistrering", value = RestEndpoints.FRAVAR, produces = {FintRelationsMediaType.APPLICATION_HAL_JSON_VALUE, MediaType.APPLICATION_JSON_VALUE})
+@RequestMapping(name = "Fravarsregistrering", value = RestEndpoints.FRAVARSREGISTRERING, produces = {FintRelationsMediaType.APPLICATION_HAL_JSON_VALUE, MediaType.APPLICATION_JSON_VALUE})
 public class FravarsregistreringController extends ConsumerRestController<FravarsregistreringResource> {
 
     public FravarsregistreringController(FravarsregistreringService fravarsregistreringService, FravarsregistreringLinker linker, FintFilterService oDataFilterService) {
