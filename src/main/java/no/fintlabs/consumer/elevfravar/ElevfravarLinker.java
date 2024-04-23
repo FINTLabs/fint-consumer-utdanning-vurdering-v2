@@ -38,25 +38,25 @@ public class ElevfravarLinker extends FintLinker<ElevfravarResource> {
     }
 
     @Override
-    public String getSelfHref(ElevfravarResource fravar) {
-        return getAllSelfHrefs(fravar).findFirst().orElse(null);
+    public String getSelfHref(ElevfravarResource elevfravarResource) {
+        return getAllSelfHrefs(elevfravarResource).findFirst().orElse(null);
     }
 
 
     @Override
-    public Stream<String> getAllSelfHrefs(ElevfravarResource fravar) {
+    public Stream<String> getAllSelfHrefs(ElevfravarResource elevfravarResource) {
         Stream.Builder<String> builder = Stream.builder();
-        if (!isNull(fravar.getSystemId()) && !StringUtils.isEmpty(fravar.getSystemId().getIdentifikatorverdi())) {
-            builder.add(createHrefWithId(fravar.getSystemId().getIdentifikatorverdi(), "systemid"));
+        if (!isNull(elevfravarResource.getSystemId()) && !StringUtils.isEmpty(elevfravarResource.getSystemId().getIdentifikatorverdi())) {
+            builder.add(createHrefWithId(elevfravarResource.getSystemId().getIdentifikatorverdi(), "systemid"));
         }
 
         return builder.build();
     }
 
-    int[] hashCodes(ElevfravarResource fravar) {
+    int[] hashCodes(ElevfravarResource elevfravarResource) {
         IntStream.Builder builder = IntStream.builder();
-        if (!isNull(fravar.getSystemId()) && !StringUtils.isEmpty(fravar.getSystemId().getIdentifikatorverdi())) {
-            builder.add(fravar.getSystemId().getIdentifikatorverdi().hashCode());
+        if (!isNull(elevfravarResource.getSystemId()) && !StringUtils.isEmpty(elevfravarResource.getSystemId().getIdentifikatorverdi())) {
+            builder.add(elevfravarResource.getSystemId().getIdentifikatorverdi().hashCode());
         }
 
         return builder.build().toArray();
