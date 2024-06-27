@@ -1,5 +1,6 @@
 package no.fintlabs.consumer.admin;
 
+import jakarta.annotation.PostConstruct;
 import no.fintlabs.cache.CacheManager;
 import no.fintlabs.consumer.config.RestEndpoints;
 import no.fintlabs.core.consumer.shared.config.ConsumerProps;

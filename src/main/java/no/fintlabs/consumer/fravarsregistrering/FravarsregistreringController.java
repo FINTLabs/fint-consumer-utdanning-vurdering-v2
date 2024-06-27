@@ -1,5 +1,6 @@
 package no.fintlabs.consumer.fravarsregistrering;
 
+import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 import no.fint.antlr.FintFilterService;
 import no.fint.model.resource.utdanning.vurdering.FravarsregistreringResource;
@@ -19,6 +20,11 @@ public class FravarsregistreringController extends ConsumerRestController<Fravar
 
     public FravarsregistreringController(FravarsregistreringService fravarsregistreringService, FravarsregistreringLinker linker, FintFilterService oDataFilterService) {
         super(fravarsregistreringService, linker, oDataFilterService);
+    }
+
+    @PostConstruct
+    private void registerIdentificators() {
+        super.registerIdenficatorHandler("systemid", FravarsregistreringResource::getSystemId);
     }
 }
 

@@ -1,5 +1,6 @@
 package no.fintlabs.consumer.elevfravar;
 
+import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 import no.fint.antlr.FintFilterService;
 import no.fint.model.resource.utdanning.vurdering.ElevfravarResource;
@@ -20,4 +21,10 @@ public class ElevfravarController extends ConsumerRestController<ElevfravarResou
     public ElevfravarController(ElevfravarService elevfravarService, ElevfravarLinker elevfravarLinker, FintFilterService oDataFilterService) {
         super(elevfravarService, elevfravarLinker, oDataFilterService);
     }
+
+    @PostConstruct
+    private void registerIdentificators() {
+        super.registerIdenficatorHandler("systemid", ElevfravarResource::getSystemId);
+    }
+
 }
