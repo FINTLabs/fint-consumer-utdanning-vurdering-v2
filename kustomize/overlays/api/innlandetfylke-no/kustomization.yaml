@@ -7,6 +7,7 @@ patchesStrategicMerge:
   - config-map.yaml
   - ingress-route.yaml
   - kafka-user-and-acl.yaml
+  - deployment.yaml
 commonLabels:
   app.kubernetes.io/name: fint-core-consumer-utdanning-vurdering
   app.kubernetes.io/instance: fint-core-consumer-utdanning-vurdering_innlandetfylke_no
