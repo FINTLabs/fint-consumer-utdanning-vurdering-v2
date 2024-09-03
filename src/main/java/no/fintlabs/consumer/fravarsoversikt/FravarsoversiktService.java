@@ -39,11 +39,11 @@ public class FravarsoversiktService extends CacheService<FravarsoversiktResource
 
     @PostConstruct
     private void registerKafkaListener() {
-        long retention = fravarsoversiktKafkaConsumer.registerListener(FravarsoversiktResource.class, this::addResourceToCache);
-        getCache().setRetentionPeriodInMs(retention);
+        fravarsoversiktKafkaConsumer.registerListener(FravarsoversiktResource.class, this::addResourceToCache);
     }
 
     private void addResourceToCache(ConsumerRecord<String, FravarsoversiktResource> consumerRecord) {
+        updateRetensionTime(consumerRecord.headers().lastHeader("topic-retension-time"));
         this.eventLogger.logDataRecieved();
         FravarsoversiktResource fravarResource = consumerRecord.value();
         linker.mapLinks(fravarResource);

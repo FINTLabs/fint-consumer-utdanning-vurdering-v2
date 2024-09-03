@@ -62,11 +62,11 @@ public class ElevfravarService extends CacheService<ElevfravarResource> {
 
     @PostConstruct
     private void registerKafkaListener() {
-        long retension = elevfravarKafkaConsumer.registerListener(ElevfravarResource.class, this::addResourceToCache);
-        getCache().setRetentionPeriodInMs(retension);
+        elevfravarKafkaConsumer.registerListener(ElevfravarResource.class, this::addResourceToCache);
     }
 
     private void addResourceToCache(ConsumerRecord<String, ElevfravarResource> consumerRecord) {
+        updateRetensionTime(consumerRecord.headers().lastHeader("topic-retension-time"));
         this.eventLogger.logDataRecieved();
         if (consumerRecord.value() == null) {
             getCache().remove(consumerRecord.key());
